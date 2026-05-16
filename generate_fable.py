@@ -250,8 +250,51 @@ def main():
     html_builder.update_index_html(state, concepts_data)
     logger.info("目录首页已更新")
 
+    # 14. 推送到 GitHub Pages
+    git_push(story_number, concept_name)
+
     logger.info(f"[OK] 第 {story_number} 篇 [{concept_name}] 生成完毕！")
     logger.info("=" * 60)
+
+
+# ============================================================
+# Git 自动推送
+# ============================================================
+GIT_EXE = os.path.join(config.BASE_DIR, "git", "cmd", "git.exe")
+
+
+def git_push(story_number, concept_name):
+    """生成后自动 commit + push 到 GitHub"""
+    import subprocess
+
+    if not os.path.exists(GIT_EXE):
+        logger.warning(f"Portable Git 未找到: {GIT_EXE}，跳过推送。")
+        return
+
+    try:
+        def run_git(*args):
+            result = subprocess.run(
+                [GIT_EXE] + list(args),
+                cwd=config.BASE_DIR,
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            if result.returncode != 0 and result.stderr:
+                logger.warning(f"git {args[0]}: {result.stderr.strip()}")
+            return result
+
+        run_git("add", "-A")
+        run_git("commit", "-m", f"story {story_number:03d}: {concept_name}")
+        result = run_git("push", "origin", "main")
+
+        if result.returncode == 0:
+            logger.info("GitHub Pages 推送成功")
+        else:
+            logger.warning(f"推送可能失败: {result.stderr.strip()}")
+
+    except Exception as e:
+        logger.error(f"Git 推送异常: {e}")
 
 
 if __name__ == "__main__":
@@ -260,3 +303,4 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"致命错误: {e}", exc_info=True)
         sys.exit(1)
+
