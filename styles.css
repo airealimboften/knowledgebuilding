@@ -1,0 +1,666 @@
+/* ============================================================
+   每日寓言 · 概念之旅 — 全局样式表
+   ============================================================ */
+
+/* --- Google Fonts 引入 --- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+/* --- CSS 变量 --- */
+:root {
+    --bg-primary: #0a0a12;
+    --bg-secondary: #12121e;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --text-primary: #e8e6e3;
+    --text-secondary: #9a9a9a;
+    --text-muted: #5a5a6a;
+    --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --accent-color: #667eea;
+    --accent-color-2: #764ba2;
+    --gold: #ffd700;
+    --success: #00b894;
+    --warning: #fdcb6e;
+    --danger: #ff7675;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 64px rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-serif: 'Noto Serif SC', 'Songti SC', serif;
+    --font-sans: 'Noto Sans SC', 'PingFang SC', sans-serif;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.8;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* --- 背景装饰 --- */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 20% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(118, 75, 162, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(0, 184, 148, 0.04) 0%, transparent 50%);
+    z-index: -1;
+    animation: bgShift 30s ease-in-out infinite alternate;
+}
+
+@keyframes bgShift {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-2%, -1%) rotate(2deg); }
+}
+
+/* --- 页面容器 --- */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================================
+   首页 Hero 区域
+   ============================================================ */
+.hero {
+    text-align: center;
+    padding: 80px 24px 60px;
+    position: relative;
+}
+
+.hero h1 {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    letter-spacing: 4px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 2px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.hero .stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 32px;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.hero .stats .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero .stats .stat-number {
+    font-size: 2.4rem;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero .stats .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   目录网格
+   ============================================================ */
+.toc-section {
+    padding: 20px 24px 60px;
+}
+
+.toc-section h2 {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.toc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.toc-item:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.toc-item .item-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+}
+
+.toc-item .item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.toc-item .item-name {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.toc-item .item-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.field-tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    background: rgba(102, 126, 234, 0.15);
+    color: var(--accent-color);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* ============================================================
+   检查点 (100篇确认)
+   ============================================================ */
+.checkpoint {
+    margin: 40px auto;
+    max-width: 600px;
+    padding: 32px;
+    background: linear-gradient(135deg, rgba(253, 203, 110, 0.08) 0%, rgba(255, 118, 117, 0.08) 100%);
+    border: 1px solid rgba(253, 203, 110, 0.2);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.checkpoint h2 {
+    font-family: var(--font-serif);
+    color: var(--warning);
+    margin-bottom: 12px;
+    border: none;
+    padding: 0;
+}
+
+.checkpoint p {
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.checkpoint .confirm-instruction {
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-sm);
+    font-family: 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: var(--warning);
+}
+
+/* ============================================================
+   寓言文章页
+   ============================================================ */
+.fable-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+.fable-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.fable-nav a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.fable-nav a:hover {
+    color: var(--accent-color-2);
+}
+
+.fable-header {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.fable-header .story-number {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent-color);
+    background: rgba(102, 126, 234, 0.1);
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+}
+
+.fable-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+
+.fable-header .meta {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* --- 回复上篇讨论 --- */
+.reply-to-previous {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.06) 0%, rgba(118, 75, 162, 0.06) 100%);
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin-bottom: 40px;
+}
+
+.reply-to-previous h3 {
+    color: var(--accent-color);
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+.reply-to-previous blockquote {
+    border-left: 3px solid var(--accent-color-2);
+    padding-left: 16px;
+    margin: 12px 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.reply-to-previous .reply-content {
+    color: var(--text-primary);
+    line-height: 1.9;
+}
+
+/* --- 寓言正文 --- */
+.fable-body {
+    margin-bottom: 40px;
+}
+
+.fable-body h2 {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    padding-left: 12px;
+    border-left: 3px solid var(--accent-color);
+}
+
+.fable-body p {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 2;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    text-indent: 2em;
+}
+
+.fable-body .moral {
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--bg-glass);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--gold);
+    font-family: var(--font-serif);
+    color: var(--gold);
+    font-weight: 600;
+    text-indent: 0;
+}
+
+/* --- 概念解析 --- */
+.concept-explanation {
+    margin-bottom: 40px;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-md);
+}
+
+.concept-explanation h2 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-left: 12px;
+    border-left: 3px solid var(--success);
+}
+
+.concept-explanation p {
+    color: var(--text-secondary);
+    line-height: 1.9;
+}
+
+/* --- 关联篇目 --- */
+.related-concepts {
+    margin-bottom: 40px;
+}
+
+.related-concepts h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.related-concepts ul {
+    list-style: none;
+    padding: 0;
+}
+
+.related-concepts li {
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+}
+
+.related-concepts li:hover {
+    border-color: var(--accent-color);
+}
+
+.related-concepts a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.related-concepts a:hover {
+    text-decoration: underline;
+}
+
+.related-concepts .related-desc {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-left: 8px;
+}
+
+/* --- 讨论区 --- */
+.discussion {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border-glass);
+}
+
+.discussion h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.discussion .user-comment {
+    min-height: 60px;
+    padding: 20px;
+    background: var(--bg-card);
+    border: 1px dashed var(--border-glass);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.discussion .user-comment:hover {
+    border-color: var(--accent-color);
+}
+
+.discussion .hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* --- AI回复 --- */
+.ai-reply {
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(0, 184, 148, 0.06) 0%, rgba(102, 126, 234, 0.06) 100%);
+    border: 1px solid rgba(0, 184, 148, 0.15);
+    border-radius: var(--radius-md);
+}
+
+.ai-reply h4 {
+    color: var(--success);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+/* --- 表格样式 --- */
+.fable-body table,
+.concept-explanation table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.92rem;
+}
+
+.fable-body th,
+.concept-explanation th {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--accent-color);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-glass);
+}
+
+.fable-body td,
+.concept-explanation td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-glass);
+    color: var(--text-secondary);
+}
+
+.fable-body tr:hover td,
+.concept-explanation tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* --- SVG 图解 --- */
+.diagram-container {
+    text-align: center;
+    margin: 24px 0;
+    padding: 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+}
+
+.diagram-container svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.diagram-container figcaption {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ============================================================
+   动画
+   ============================================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* ============================================================
+   页脚
+   ============================================================ */
+.page-footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-glass);
+    margin-top: 60px;
+}
+
+/* ============================================================
+   响应式
+   ============================================================ */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .toc-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .fable-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero .stats {
+        gap: 20px;
+    }
+    
+    .hero .stats .stat-number {
+        font-size: 1.8rem;
+    }
+}
+
+/* --- 标记样式 --- */
+mark {
+    background: rgba(102, 126, 234, 0.2);
+    color: var(--accent-color);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* --- 滚动条 --- */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+git/
+PortableGit.exe
+generate.log
+task_scheduler.xml
