@@ -131,6 +131,9 @@ def main():
     os.makedirs(config.STORIES_DIR, exist_ok=True)
     os.makedirs(config.ASSETS_DIR, exist_ok=True)
 
+    # 0. 从 GitHub 拉取最新内容（获取用户在网页上的留言）
+    git_pull()
+
     # 1. 加载状态
     state = load_state()
     logger.info(f"当前状态: 已生成 {state['total_generated']} 篇, 暂停={state['is_paused']}")
@@ -258,40 +261,61 @@ def main():
 
 
 # ============================================================
-# Git 自动推送
+# Git 操作
 # ============================================================
 GIT_EXE = os.path.join(config.BASE_DIR, "git", "cmd", "git.exe")
 
 
-def git_push(story_number, concept_name):
-    """生成后自动 commit + push 到 GitHub"""
+def _run_git(*args):
+    """执行 git 命令的内部辅助函数"""
     import subprocess
 
     if not os.path.exists(GIT_EXE):
-        logger.warning(f"Portable Git 未找到: {GIT_EXE}，跳过推送。")
+        logger.warning(f"Portable Git 未找到: {GIT_EXE}")
+        return None
+
+    result = subprocess.run(
+        [GIT_EXE] + list(args),
+        cwd=config.BASE_DIR,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    if result.returncode != 0 and result.stderr:
+        logger.warning(f"git {args[0]}: {result.stderr.strip()}")
+    return result
+
+
+def git_pull():
+    """生成前从 GitHub 拉取最新内容（获取用户在网页上的留言）"""
+    if not os.path.exists(GIT_EXE):
         return
 
     try:
-        def run_git(*args):
-            result = subprocess.run(
-                [GIT_EXE] + list(args),
-                cwd=config.BASE_DIR,
-                capture_output=True,
-                text=True,
-                timeout=60,
-            )
-            if result.returncode != 0 and result.stderr:
-                logger.warning(f"git {args[0]}: {result.stderr.strip()}")
-            return result
+        result = _run_git("pull", "origin", "main")
+        if result and result.returncode == 0:
+            logger.info("已从 GitHub 拉取最新内容")
+        else:
+            logger.warning("Git pull 未成功，使用本地版本继续")
+    except Exception as e:
+        logger.error(f"Git pull 异常: {e}")
 
-        run_git("add", "-A")
-        run_git("commit", "-m", f"story {story_number:03d}: {concept_name}")
-        result = run_git("push", "origin", "main")
 
-        if result.returncode == 0:
+def git_push(story_number, concept_name):
+    """生成后自动 commit + push 到 GitHub"""
+    if not os.path.exists(GIT_EXE):
+        logger.warning(f"Portable Git 未找到，跳过推送。")
+        return
+
+    try:
+        _run_git("add", "-A")
+        _run_git("commit", "-m", f"story {story_number:03d}: {concept_name}")
+        result = _run_git("push", "origin", "main")
+
+        if result and result.returncode == 0:
             logger.info("GitHub Pages 推送成功")
         else:
-            logger.warning(f"推送可能失败: {result.stderr.strip()}")
+            logger.warning(f"推送可能失败")
 
     except Exception as e:
         logger.error(f"Git 推送异常: {e}")
@@ -303,4 +327,3 @@ if __name__ == "__main__":
     except Exception as e:
         logger.error(f"致命错误: {e}", exc_info=True)
         sys.exit(1)
-
