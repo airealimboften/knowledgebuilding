@@ -1,19 +1,143 @@
 # -*- coding: utf-8 -*-
-"""HTML 生成器 - 负责生成寓言页面和更新目录首页"""
+"""HTML 生成器 - 负责生成寓言页面和更新目录首页（含密码门 + Giscus 评论）"""
 
 import os
 import json
+import re
 from datetime import datetime
 import config
 
 
 # ============================================================
-# 领域颜色 CSS
+# 密码门 JS（内嵌到每个页面）
+# ============================================================
+def _password_gate_js():
+    """生成密码门的 JavaScript 代码"""
+    return f"""
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">🔒</div>
+        <h2>每日寓言 · 概念之旅</h2>
+        <p class="auth-subtitle">请输入访问密码</p>
+        <input type="password" id="auth-input" placeholder="密码" autofocus>
+        <button id="auth-btn">进入</button>
+        <p id="auth-error">密码错误，请重试</p>
+    </div>
+</div>
+<script>
+(function() {{
+    const H='{config.ACCESS_PASSWORD_HASH}';
+    const K='fable_auth';
+    const overlay=document.getElementById('auth-overlay');
+    const content=document.getElementById('page-content');
+    if(localStorage.getItem(K)===H){{
+        overlay.style.display='none';
+        content.style.display='';
+        return;
+    }}
+    content.style.display='none';
+    async function check(){{
+        const v=document.getElementById('auth-input').value;
+        const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+        const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+        if(hex===H){{
+            localStorage.setItem(K,H);
+            overlay.style.display='none';
+            content.style.display='';
+        }}else{{
+            document.getElementById('auth-error').style.display='block';
+            document.getElementById('auth-input').value='';
+            document.getElementById('auth-input').focus();
+        }}
+    }}
+    document.getElementById('auth-btn').addEventListener('click',check);
+    document.getElementById('auth-input').addEventListener('keypress',e=>{{if(e.key==='Enter')check();}});
+}})();
+</script>"""
+
+
+def _password_gate_css():
+    """密码门的 CSS 样式"""
+    return """
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+"""
+
+
+# ============================================================
+# Giscus 评论组件
+# ============================================================
+def _giscus_widget(story_term):
+    """生成 Giscus 评论组件的 HTML"""
+    if not config.GISCUS_CATEGORY_ID:
+        # 如果 category_id 未配置，使用占位提示
+        return f"""
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <p class="hint">Giscus 评论系统待配置。请在 config.py 中填入 GISCUS_CATEGORY_ID。</p>
+    </section>"""
+
+    return f"""
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="{config.GITHUB_OWNER}/{config.GITHUB_REPO}"
+            data-repo-id="{config.GITHUB_REPO_ID}"
+            data-category="{config.GISCUS_CATEGORY}"
+            data-category-id="{config.GISCUS_CATEGORY_ID}"
+            data-mapping="specific"
+            data-term="{story_term}"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>"""
+
+
+# ============================================================
+# 领域颜色
 # ============================================================
 def _field_color_css(field):
-    """获取领域对应的颜色"""
-    color = config.FIELD_COLORS.get(field, "#667eea")
-    return color
+    return config.FIELD_COLORS.get(field, "#667eea")
 
 
 # ============================================================
@@ -30,57 +154,40 @@ def generate_story_html(
     related_links=None,
     date_str=None,
 ):
-    """
-    生成单篇寓言的完整 HTML 文件。
-
-    参数:
-        story_number: 故事编号 (int)
-        concept_name: 概念名称
-        field: 所属领域
-        fable_content: LLM 生成的寓言 HTML 片段
-        reply_title: 上一篇的标题（用于回复）
-        reply_comment: 用户的留言内容
-        reply_text: AI 的回复内容
-        related_links: 关联篇目列表 [{"number": 5, "name": "xxx", "file": "005_xxx.html"}, ...]
-        date_str: 日期字符串
-    """
     if date_str is None:
         date_str = datetime.now().strftime("%Y-%m-%d")
 
     num_str = f"{story_number:03d}"
     field_color = _field_color_css(field)
+    story_term = f"{num_str} {concept_name}"
 
-    # 构建回复区块
+    # 回复区块
     reply_section = ""
     if reply_title and reply_comment and reply_text:
         reply_section = f"""
-    <section class="reply-to-previous fade-in-up">
-        <h3>📮 回复上篇讨论</h3>
-        <blockquote>您在《{reply_title}》中问道：{reply_comment}</blockquote>
-        <div class="reply-content">{reply_text}</div>
-    </section>"""
+        <section class="reply-to-previous fade-in-up">
+            <h3>📮 回复上篇讨论</h3>
+            <blockquote>您在《{reply_title}》中问道：{reply_comment}</blockquote>
+            <div class="reply-content">{reply_text}</div>
+        </section>"""
 
-    # 构建关联篇目
+    # 关联篇目
     related_section = ""
     if related_links:
         items = "\n".join(
-            f'            <li><a href="{r["file"]}">第{r["number"]:03d}篇：{r["name"]}</a></li>'
+            f'                <li><a href="{r["file"]}">第{r["number"]:03d}篇：{r["name"]}</a></li>'
             for r in related_links
         )
         related_section = f"""
-    <section class="related-concepts fade-in-up">
-        <h3>🔗 关联篇目</h3>
-        <ul>
+        <section class="related-concepts fade-in-up">
+            <h3>🔗 关联篇目</h3>
+            <ul>
 {items}
-        </ul>
-    </section>"""
+            </ul>
+        </section>"""
 
-    # 导航链接
-    prev_link = ""
-    if story_number > 1:
-        prev_link = f'<a href="javascript:history.back()">← 上一篇</a>'
-    else:
-        prev_link = '<span></span>'
+    # 导航
+    prev_link = '<a href="javascript:history.back()">← 上一篇</a>' if story_number > 1 else '<span></span>'
 
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -100,9 +207,12 @@ def generate_story_html(
             background: {field_color}15;
             color: {field_color};
         }}
+{_password_gate_css()}
     </style>
 </head>
 <body>
+{_password_gate_js()}
+<div id="page-content">
 <div class="fable-page">
     <nav class="fable-nav">
         {prev_link}
@@ -122,17 +232,12 @@ def generate_story_html(
 {fable_content}
     </section>
 {related_section}
-    <section class="discussion fade-in-up" id="discussion-{num_str}">
-        <h3>💬 讨论区</h3>
-        <div class="user-comment" id="comment-{num_str}">
-            <!-- 在此处输入您的留言 -->
-        </div>
-        <p class="hint">提示：直接编辑此 HTML 文件，在上方 div 标签内输入您的想法，保存即可。下一篇寓言生成时会读取并回复。</p>
-    </section>
+{_giscus_widget(story_term)}
 
     <footer class="page-footer">
         <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
     </footer>
+</div>
 </div>
 </body>
 </html>"""
@@ -143,7 +248,6 @@ def generate_story_html(
 def save_story(story_number, concept_name, html_content):
     """保存故事 HTML 到 stories 目录"""
     os.makedirs(config.STORIES_DIR, exist_ok=True)
-    # 文件名中去除特殊字符
     safe_name = concept_name.replace("/", "-").replace("\\", "-").replace(" ", "_")
     filename = f"{story_number:03d}_{safe_name}.html"
     filepath = os.path.join(config.STORIES_DIR, filename)
@@ -158,13 +262,9 @@ def save_story(story_number, concept_name, html_content):
 # 目录首页 HTML 生成/更新
 # ============================================================
 def update_index_html(state_data, concepts_data):
-    """
-    重新生成 index.html 目录首页。
-    """
     used = concepts_data.get("used_concepts", [])
     total = state_data.get("total_generated", 0)
 
-    # 统计领域分布
     field_count = {}
     for field, concepts in concepts_data["fields"].items():
         count = len([c for c in concepts if c in used])
@@ -172,29 +272,24 @@ def update_index_html(state_data, concepts_data):
             field_count[field] = count
 
     fields_covered = len(field_count)
-
-    # 构建目录条目
     toc_entries = _build_toc_entries()
-
-    # 构建检查点
     checkpoints_html = _build_checkpoints(state_data)
 
-    # 统计区
     stats_html = f"""
-        <div class="stats">
-            <div class="stat-item">
-                <span class="stat-number">{total}</span>
-                <span class="stat-label">已生成篇数</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">{fields_covered}</span>
-                <span class="stat-label">覆盖领域</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">{sum(len(v) for v in concepts_data['fields'].values()) - len(used)}</span>
-                <span class="stat-label">待探索概念</span>
-            </div>
-        </div>"""
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">{total}</span>
+                    <span class="stat-label">已生成篇数</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{fields_covered}</span>
+                    <span class="stat-label">覆盖领域</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{sum(len(v) for v in concepts_data['fields'].values()) - len(used)}</span>
+                    <span class="stat-label">待探索概念</span>
+                </div>
+            </div>"""
 
     html = f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -204,8 +299,13 @@ def update_index_html(state_data, concepts_data):
     <title>每日寓言 · 概念之旅</title>
     <meta name="description" content="以寓言之光照亮知识的幽径——每日一篇，用故事解说科学、经济、人文等领域的核心概念">
     <link rel="stylesheet" href="styles.css">
+    <style>
+{_password_gate_css()}
+    </style>
 </head>
 <body>
+{_password_gate_js()}
+<div id="page-content">
 <div class="container">
     <header class="hero">
         <h1>每日寓言 · 概念之旅</h1>
@@ -225,6 +325,7 @@ def update_index_html(state_data, concepts_data):
         <p>每日自动生成 · 概念池覆盖 {len(concepts_data['fields'])} 个学科领域</p>
     </footer>
 </div>
+</div>
 </body>
 </html>"""
 
@@ -233,7 +334,6 @@ def update_index_html(state_data, concepts_data):
 
 
 def _build_toc_entries():
-    """扫描 stories 目录，构建目录条目 HTML"""
     if not os.path.exists(config.STORIES_DIR):
         return "            <p style='color: var(--text-muted); grid-column: 1/-1; text-align: center;'>尚未生成任何寓言，敬请期待第一篇...</p>"
 
@@ -243,13 +343,11 @@ def _build_toc_entries():
     for filename in files:
         if not filename.endswith(".html"):
             continue
-
         try:
             parts = filename.replace(".html", "").split("_", 1)
             num = int(parts[0])
             name = parts[1] if len(parts) > 1 else "未知"
 
-            # 读取文件以获取领域和日期
             filepath = os.path.join(config.STORIES_DIR, filename)
             field, date = _extract_meta_from_story(filepath)
 
@@ -275,31 +373,25 @@ def _build_toc_entries():
 
 
 def _extract_meta_from_story(filepath):
-    """从故事 HTML 中提取领域和日期"""
     field = "未知"
     date = ""
     try:
         with open(filepath, "r", encoding="utf-8") as f:
-            content = f.read(2000)  # 只读取头部
+            content = f.read(2000)
 
-        # 提取领域
-        import re
         field_match = re.search(r'class="field-tag[^"]*">([^<]+)</span>', content)
         if field_match:
             field = field_match.group(1).strip()
 
-        # 提取日期
         date_match = re.search(r'datetime="(\d{4}-\d{2}-\d{2})"', content)
         if date_match:
             date = date_match.group(1)
     except Exception:
         pass
-
     return field, date
 
 
 def _build_checkpoints(state_data):
-    """构建检查点 HTML"""
     checkpoints = state_data.get("checkpoints", [])
     if not checkpoints:
         return ""

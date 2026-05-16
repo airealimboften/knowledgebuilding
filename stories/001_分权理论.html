@@ -16,9 +16,89 @@
             background: #fab1a015;
             color: #fab1a0;
         }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
     </style>
 </head>
 <body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">🔒</div>
+        <h2>每日寓言 · 概念之旅</h2>
+        <p class="auth-subtitle">请输入访问密码</p>
+        <input type="password" id="auth-input" placeholder="密码" autofocus>
+        <button id="auth-btn">进入</button>
+        <p id="auth-error">密码错误，请重试</p>
+    </div>
+</div>
+<script>
+(function() {
+    const H='5dbf791e63b35eed8770399b1b509538107b6052c98f5484207d145fc5cf47a8';
+    const K='fable_auth';
+    const overlay=document.getElementById('auth-overlay');
+    const content=document.getElementById('page-content');
+    if(localStorage.getItem(K)===H){
+        overlay.style.display='none';
+        content.style.display='';
+        return;
+    }
+    content.style.display='none';
+    async function check(){
+        const v=document.getElementById('auth-input').value;
+        const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+        const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+        if(hex===H){
+            localStorage.setItem(K,H);
+            overlay.style.display='none';
+            content.style.display='';
+        }else{
+            document.getElementById('auth-error').style.display='block';
+            document.getElementById('auth-input').value='';
+            document.getElementById('auth-input').focus();
+        }
+    }
+    document.getElementById('auth-btn').addEventListener('click',check);
+    document.getElementById('auth-input').addEventListener('keypress',e=>{if(e.key==='Enter')check();});
+})();
+</script>
+<div id="page-content">
 <div class="fable-page">
     <nav class="fable-nav">
         <span></span>
@@ -114,17 +194,16 @@
 </div>
     </section>
 
-    <section class="discussion fade-in-up" id="discussion-001">
+
+    <section class="discussion fade-in-up">
         <h3>💬 讨论区</h3>
-        <div class="user-comment" id="comment-001">
-            <!-- 在此处输入您的留言 -->
-        </div>
-        <p class="hint">提示：直接编辑此 HTML 文件，在上方 div 标签内输入您的想法，保存即可。下一篇寓言生成时会读取并回复。</p>
+        <p class="hint">Giscus 评论系统待配置。请在 config.py 中填入 GISCUS_CATEGORY_ID。</p>
     </section>
 
     <footer class="page-footer">
         <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
     </footer>
+</div>
 </div>
 </body>
 </html>

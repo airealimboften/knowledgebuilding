@@ -19,6 +19,25 @@ DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 DEEPSEEK_MODEL = "deepseek-chat"
 
 # ============================================================
+# 访问控制
+# ============================================================
+# 页面访问密码（默认 "fable2026"，修改后需重新生成页面）
+ACCESS_PASSWORD_HASH = "5dbf791e63b35eed8770399b1b509538107b6052c98f5484207d145fc5cf47a8"
+
+# 授权的 GitHub 用户名（只有这些账号的留言会被读取和回复）
+AUTHORIZED_USERS = ["airealimboften"]
+
+# ============================================================
+# GitHub 仓库信息（Giscus 评论 + API 读取）
+# ============================================================
+GITHUB_OWNER = "airealimboften"
+GITHUB_REPO = "knowledgebuilding"
+GITHUB_REPO_ID = "R_kgDOSe7aUA"
+# Discussions 分类 ID（启用 Discussions 后填入）
+GISCUS_CATEGORY = "General"
+GISCUS_CATEGORY_ID = ""  # 待填入
+
+# ============================================================
 # 生成设置
 # ============================================================
 CHECKPOINT_INTERVAL = 100       # 每100篇暂停一次
