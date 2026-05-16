@@ -35,7 +35,7 @@ GITHUB_REPO = "knowledgebuilding"
 GITHUB_REPO_ID = "R_kgDOSe7aUA"
 # Discussions 分类 ID（启用 Discussions 后填入）
 GISCUS_CATEGORY = "General"
-GISCUS_CATEGORY_ID = ""  # 待填入
+GISCUS_CATEGORY_ID = "DIC_kwDOSe7aUM4C9KUw"
 
 # ============================================================
 # 生成设置
