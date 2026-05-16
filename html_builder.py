@@ -36,11 +36,19 @@ def _password_gate_js():
         return;
     }}
     content.style.display='none';
-    async function check(){{
-        const v=document.getElementById('auth-input').value;
-        const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
-        const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-        if(hex===H){{
+    
+    function simpleHash(str) {{
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {{
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }}
+        return hash.toString();
+    }}
+    
+    function check(){{
+        const v=document.getElementById('auth-input').value.trim();
+        if(simpleHash(v)===H){{
             localStorage.setItem(K,H);
             overlay.style.display='none';
             content.style.display='';

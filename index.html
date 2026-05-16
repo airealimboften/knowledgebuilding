@@ -61,7 +61,7 @@
 </div>
 <script>
 (function() {
-    const H='5dbf791e63b35eed8770399b1b509538107b6052c98f5484207d145fc5cf47a8';
+    const H='1839925186';
     const K='fable_auth';
     const overlay=document.getElementById('auth-overlay');
     const content=document.getElementById('page-content');
@@ -71,11 +71,19 @@
         return;
     }
     content.style.display='none';
-    async function check(){
-        const v=document.getElementById('auth-input').value;
-        const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
-        const hex=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-        if(hex===H){
+    
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+    
+    function check(){
+        const v=document.getElementById('auth-input').value.trim();
+        if(simpleHash(v)===H){
             localStorage.setItem(K,H);
             overlay.style.display='none';
             content.style.display='';
