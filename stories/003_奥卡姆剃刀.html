@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第003篇 · 奥卡姆剃刀 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「奥卡姆剃刀」(哲学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #a29bfe20;
+            color: #a29bfe;
+            border-color: #a29bfe40;
+        }
+        .fable-header .story-number {
+            background: #a29bfe15;
+            color: #a29bfe;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 003 篇</span>
+        <h1>奥卡姆剃刀</h1>
+        <div class="meta">
+            <span class="field-tag">哲学</span>
+            <time datetime="2026-05-18">2026-05-18</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>从前，在一片茂密的森林里，住着两位远近闻名的工匠：木匠老榫和铁匠老铆。</p>
+<p>一天，森林之王——智慧的老象——需要修建一座新的议事厅。它召集全国工匠，要求：“给我一个最坚固、最实用的屋顶。谁做得好，我就把‘森林第一巧匠’的称号赐予谁。”</p>
+<p>老榫和老铆都接下了任务。老榫做事极尽繁复。他想：“要最坚固，就必须万无一失。我用三层榉木做梁，中间嵌上紫檀木的榫头，外层再包一层铁皮，铁皮上还要刻满祥云纹路，每一个纹路里再镶一颗铜钉……”他画了整整一卷图纸，动用了三十种木料、七种金属，屋顶的支架多得像蚂蚁的腿。</p>
+<p>而老铆则完全不同。他爬到一棵高大的松树旁，仔细观察了松树如何用一根笔直的主干撑起万千枝叶。他沉思良久，只挑选了五种最合适的木材——做梁、做椽、做檩。他没有雕花，没有镶钉，甚至连多余的楔子都没用一根。他只用最直接的榫卯结构，让每一块木头都恰如其分地承担受力。整个屋顶简洁得像一片展开的鹰翼。</p>
+<p>完工那天，老象前来验收。老榫的屋顶金光闪闪，雕梁画栋，每一寸都展示着精巧，但厚重得几乎要把墙压垮。老铆的屋顶通体素净，没有任何装饰，线条利落，轻巧却稳如磐石。</p>
+<p>老象先问老榫：“你的屋顶，哪一根梁最重要？”老榫指着正中雕满龙纹的主梁说：“这根。”老象又问：“那如果去掉旁边的两根辅梁呢？”老榫脸色一变：“万万不可！没有它们，屋顶的结构就不够丰富，不够保险！”老象笑了笑，转向老铆：“你的屋顶呢？”老铆平静地回答：“回大王，我的屋顶每一根都是必要的。您拿掉任何一根，它都会立刻塌掉。所以，没有一根是多余的。”</p>
+<p>老象用长鼻轻轻敲了敲老铆的屋顶，只听到结实、清脆的回响。老象宣布：“‘森林第一巧匠’是铁匠老铆。他的屋顶没有一丝赘余，却蕴含了全部的力量。复杂并不等于坚固，剃掉所有不必要的部分，留下的才是最纯粹的精髓。”</p>
+<p class="moral">寓意点睛：奥卡姆剃刀——如无必要，勿增实体。最简单、最少假设的解释，往往是最接近真理的解释。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p>奥卡姆剃刀（Occam's Razor）是由14世纪逻辑学家奥卡姆的威廉提出的哲学原理，核心思想是“如无必要，勿增实体”。在科学、哲学与问题解决中，它倡导我们在多种解释中，优先选择假设最少、最简洁的那个，因为不必要的复杂性往往掩盖了真相。</p>
+<p>简言之：剃掉赘余，保留本质。别用复杂的“龙纹辅梁”去解释一个本可以用“直松主干”说明的问题。</p>
+
+<h3>对比：两种思维模式</h3>
+<table>
+  <thead>
+    <tr>
+      <th>特征</th>
+      <th>复杂思维（老榫）</th>
+      <th>剃刀思维（老铆）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>核心</strong></td>
+      <td>增加实体以防万一</td>
+      <td>删除实体直到必要</td>
+    </tr>
+    <tr>
+      <td><strong>风险</strong></td>
+      <td>臃肿、脆弱、难以维护</td>
+      <td>过于简化可能遗漏要素</td>
+    </tr>
+    <tr>
+      <td><strong>适用场景</strong></td>
+      <td>需要冗余和容错的系统</td>
+      <td>寻求因果解释、理论构建</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>图解：剃刀的过程</h3>
+<svg width="400" height="120" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:10px auto;">
+  <!-- 解释过程箭头 -->
+  <rect x="10" y="20" width="80" height="80" rx="8" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1.5"/>
+  <text x="50" y="65" text-anchor="middle" font-size="12" fill="#0284c7" font-family="sans-serif">复杂假设</text>
+  
+  <line x1="95" y1="60" x2="145" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
+  
+  <rect x="150" y="10" width="100" height="100" rx="8" fill="#fef3c7" stroke="#fde68a" stroke-width="1.5"/>
+  <text x="200" y="45" text-anchor="middle" font-size="12" fill="#d97706" font-family="sans-serif">奥卡姆剃刀</text>
+  <text x="200" y="85" text-anchor="middle" font-size="11" fill="#b45309" font-family="sans-serif">（剔除多余）</text>
+  
+  <line x1="255" y1="60" x2="305" y2="60" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)" />
+  
+  <rect x="310" y="20" width="80" height="80" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+  <text x="350" y="65" text-anchor="middle" font-size="12" fill="#16a34a" font-family="sans-serif">简洁真理</text>
+  
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+</svg>
+<p style="text-align:center;font-size:12px;color:#64748b;">应用<mark>奥卡姆剃刀</mark>，从冗余走向精要。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="003 奥卡姆剃刀"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>
