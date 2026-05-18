@@ -22,7 +22,7 @@ DEEPSEEK_MODEL = "deepseek-chat"
 # 访问控制
 # ============================================================
 # 页面访问密码（默认 "fable2026"，修改后需重新生成页面）
-ACCESS_PASSWORD_HASH = "301986420"
+ACCESS_PASSWORD_HASH = "1839925186"
 
 # 授权的 GitHub 用户名（只有这些账号的留言会被读取和回复）
 AUTHORIZED_USERS = ["airealimboften"]
