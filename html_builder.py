@@ -11,32 +11,31 @@ import config
 # ============================================================
 # 密码门 JS（内嵌到每个页面）
 # ============================================================
-def _password_gate_js():
-    """生成密码门的 JavaScript 代码"""
-    return f"""
+def _password_gate_overlay():
+    """HTML overlay div (placed at top of body)"""
+    return """
 <div id="auth-overlay">
     <div class="auth-box">
-        <div class="auth-icon">🔒</div>
-        <h2>每日寓言 · 概念之旅</h2>
-        <p class="auth-subtitle">请输入访问密码</p>
-        <input type="password" id="auth-input" placeholder="密码" autofocus>
-        <button id="auth-btn">进入</button>
-        <p id="auth-error">密码错误，请重试</p>
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
     </div>
-</div>
+</div>"""
+
+
+def _password_gate_js():
+    """Password gate JS — placed at END of body so all DOM elements exist"""
+    return f"""
 <script>
-(function() {{
-    const H='{config.ACCESS_PASSWORD_HASH}';
-    const K='fable_auth';
-    const overlay=document.getElementById('auth-overlay');
-    const content=document.getElementById('page-content');
-    if(localStorage.getItem(K)===H){{
-        overlay.style.display='none';
-        content.style.display='';
-        return;
-    }}
-    content.style.display='none';
-    
+document.addEventListener('DOMContentLoaded', function() {{
+    const H = '{config.ACCESS_PASSWORD_HASH}';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
     function simpleHash(str) {{
         let hash = 0;
         for (let i = 0; i < str.length; i++) {{
@@ -45,22 +44,42 @@ def _password_gate_js():
         }}
         return hash.toString();
     }}
-    
-    function check(){{
-        const v=document.getElementById('auth-input').value.trim();
-        if(simpleHash(v)===H){{
-            localStorage.setItem(K,H);
-            overlay.style.display='none';
-            content.style.display='';
-        }}else{{
-            document.getElementById('auth-error').style.display='block';
-            document.getElementById('auth-input').value='';
-            document.getElementById('auth-input').focus();
+
+    function unlock() {{
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }}
+
+    function reject() {{
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }}
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {{
+        unlock();
+        return;
+    }}
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {{
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {{
+            localStorage.setItem(K, H);
+            unlock();
+        }} else {{
+            reject();
         }}
     }}
-    document.getElementById('auth-btn').addEventListener('click',check);
-    document.getElementById('auth-input').addEventListener('keypress',e=>{{if(e.key==='Enter')check();}});
-}})();
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {{
+        if (e.key === 'Enter') check();
+    }});
+}});
 </script>"""
 
 
@@ -219,7 +238,7 @@ def generate_story_html(
     </style>
 </head>
 <body>
-{_password_gate_js()}
+{_password_gate_overlay()}
 <div id="page-content">
 <div class="fable-page">
     <nav class="fable-nav">
@@ -247,6 +266,7 @@ def generate_story_html(
     </footer>
 </div>
 </div>
+{_password_gate_js()}
 </body>
 </html>"""
 
@@ -312,7 +332,7 @@ def update_index_html(state_data, concepts_data):
     </style>
 </head>
 <body>
-{_password_gate_js()}
+{_password_gate_overlay()}
 <div id="page-content">
 <div class="container">
     <header class="hero">
@@ -334,6 +354,7 @@ def update_index_html(state_data, concepts_data):
     </footer>
 </div>
 </div>
+{_password_gate_js()}
 </body>
 </html>"""
 
