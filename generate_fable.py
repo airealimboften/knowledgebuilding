@@ -2,7 +2,7 @@
 """
 每日寓言生成系统 — 主控脚本
 ============================
-每天凌晨 3:00 由 Windows Task Scheduler 触发。
+每天下午 15:00 和晚上 20:00 由 Windows Task Scheduler 触发。
 主选 Gemini API，网络失败时回退至 DeepSeek API。
 """
 
@@ -33,6 +33,28 @@ logging.basicConfig(
     ],
 )
 logger = logging.getLogger(__name__)
+
+
+def call_deepseek(prompt):
+    """调用 DeepSeek API（OpenAI 兼容接口）"""
+    from openai import OpenAI
+    client = OpenAI(
+        api_key=config.DEEPSEEK_API_KEY,
+        base_url=config.DEEPSEEK_BASE_URL,
+    )
+    response = client.chat.completions.create(
+        model=config.DEEPSEEK_MODEL,
+        messages=[
+            {
+                "role": "system",
+                "content": "你是一位博学的寓言大师，擅长用精炼的寓言故事解说复杂的专业概念。你的输出是 HTML 片段。",
+            },
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0.85,
+        max_tokens=2048,
+    )
+    return response.choices[0].message.content
 
 
 def call_llm(prompt):
