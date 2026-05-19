@@ -2,8 +2,12 @@
 """
 每日寓言生成系统 — 主控脚本
 ============================
-每天下午 15:00 和晚上 20:00 由 Windows Task Scheduler 触发。
-主选 Gemini API，网络失败时回退至 DeepSeek API。
+15:00 生成每日 DAILY_COUNT 篇寓言。
+20:00 检查 "再来一篇" 请求，最多再生成 MAX_EXTRA_PER_DAY 篇。
+
+用法:
+    python generate_fable.py            # 每日主生成
+    python generate_fable.py --extra    # 处理"再来一篇"请求
 """
 
 import os
@@ -11,9 +15,11 @@ import sys
 import json
 import logging
 import time
+import argparse
+import urllib.request
+import urllib.error
 from datetime import datetime
 
-# 确保项目根目录在 sys.path 中
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import config
@@ -35,6 +41,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+# ============================================================
+# DeepSeek API
+# ============================================================
 def call_deepseek(prompt):
     """调用 DeepSeek API（OpenAI 兼容接口）"""
     from openai import OpenAI
@@ -58,9 +67,6 @@ def call_deepseek(prompt):
 
 
 def call_llm(prompt):
-    """
-    调用 LLM，目前仅使用 DeepSeek API。
-    """
     try:
         logger.info("尝试调用 DeepSeek API...")
         result = call_deepseek(prompt)
@@ -68,7 +74,7 @@ def call_llm(prompt):
         return result
     except Exception as e:
         logger.error(f"DeepSeek 调用失败: {e}")
-        raise RuntimeError(f"API 调用失败")
+        raise RuntimeError("API 调用失败")
 
 
 # ============================================================
@@ -84,11 +90,19 @@ def save_state(state):
         json.dump(state, f, ensure_ascii=False, indent=4)
 
 
+def reset_daily_counters(state):
+    """如果是新的一天，重置每日计数器"""
+    today = datetime.now().strftime("%Y-%m-%d")
+    if state.get("last_generated_date") != today:
+        state["today_count"] = 0
+        state["today_extra_count"] = 0
+    return today
+
+
 # ============================================================
 # Prompt 构建
 # ============================================================
 def build_fable_prompt(concept_name, field, reply_context=None):
-    """构建寓言生成 Prompt"""
     reply_part = ""
     if reply_context:
         title, comment = reply_context
@@ -98,12 +112,11 @@ def build_fable_prompt(concept_name, field, reply_context=None):
 上一篇标题：《{title}》
 读者留言：{comment}
 
-请生成一段简洁、有深度的回复（3-5句话），用 <div class="ai-reply"><h4>📝 回复</h4><p>你的回复</p></div> 包裹。
-这段回复将出现在本篇寓言正文之前。
+请生成一段简洁、有深度的回复（3-5句话），用 <div class="ai-reply"><h4>回复</h4><p>你的回复</p></div> 包裹。
 ---
 """
 
-    prompt = f"""{reply_part}
+    return f"""{reply_part}
 请为以下概念创作一篇中文寓言故事。输出纯 HTML 片段（不需要 DOCTYPE、head、body 等外层标签）。
 
 概念：{concept_name}
@@ -125,11 +138,9 @@ def build_fable_prompt(concept_name, field, reply_context=None):
 
 直接输出 HTML 片段，不要有任何其他前缀或后缀说明。
 """
-    return prompt
 
 
 def build_reply_prompt(title, comment):
-    """构建讨论回复 Prompt（独立调用时使用）"""
     return f"""
 读者在阅读《{title}》后留言：
 {comment}
@@ -141,101 +152,60 @@ def build_reply_prompt(title, comment):
 
 
 # ============================================================
-# 主流程
+# 单篇生成（核心）
 # ============================================================
-def main():
-    logger.info("=" * 60)
-    logger.info("每日寓言生成系统启动")
-    logger.info(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    logger.info("=" * 60)
-
-    # 确保目录存在
-    os.makedirs(config.STORIES_DIR, exist_ok=True)
-    os.makedirs(config.ASSETS_DIR, exist_ok=True)
-
-    # 0. 从 GitHub 拉取最新内容（获取用户在网页上的留言）
-    git_pull()
-
-    # 1. 加载状态
-    state = load_state()
-    logger.info(f"当前状态: 已生成 {state['total_generated']} 篇, 暂停={state['is_paused']}")
-
-    # 2. 检查是否暂停
-    if state["is_paused"]:
-        logger.info("⏸ 系统已暂停（等待确认继续），跳过生成。")
-        logger.info("请将 state.json 中的 is_paused 改为 false 以继续。")
-        return
-
-    # 3. 检查今天是否已生成（防止重复）
-    today = datetime.now().strftime("%Y-%m-%d")
-    if state.get("last_generated_date") == today:
-        logger.info(f"今天 ({today}) 已生成过，跳过。")
-        return
-
-    # 4. 加载概念库
-    concepts_data = concept_manager.load_concepts()
-
-    # 5. 选择概念
+def generate_one_fable(state, concepts_data, today, check_discussion=False):
+    """
+    生成一篇寓言。返回 True 成功，False 失败。
+    check_discussion: 仅第一篇时检查上篇讨论。
+    """
+    # 选择概念
     field, concept_name = concept_manager.select_random_concept(concepts_data)
     if concept_name is None:
         logger.warning("所有概念已用完！请扩充概念池。")
-        return
+        return False
 
     story_number = state["total_generated"] + 1
-    logger.info(f"选定概念: [{field}] {concept_name} (第 {story_number} 篇)")
+    logger.info(f"--- 第 {story_number} 篇: [{field}] {concept_name} ---")
 
-    # 6. 读取上一篇讨论
+    # 讨论回复（仅第一篇）
     reply_context = None
     reply_text = None
-    prev_title, prev_comment = discussion_reader.read_previous_discussion(story_number)
-    if prev_title and prev_comment:
-        logger.info(f"发现上篇讨论: 《{prev_title}》 => {prev_comment[:50]}...")
-        reply_context = (prev_title, prev_comment)
-        # 生成回复
-        try:
-            reply_prompt = build_reply_prompt(prev_title, prev_comment)
-            reply_text = call_llm(reply_prompt)
-            logger.info("讨论回复已生成")
-        except Exception as e:
-            logger.error(f"生成讨论回复失败: {e}")
-            reply_text = None
-    else:
-        logger.info("上篇无讨论留言")
+    prev_title = prev_comment = None
+    if check_discussion:
+        prev_title, prev_comment = discussion_reader.read_previous_discussion(story_number)
+        if prev_title and prev_comment:
+            logger.info(f"发现上篇讨论: {prev_comment[:50]}...")
+            reply_context = (prev_title, prev_comment)
+            try:
+                reply_text = call_llm(build_reply_prompt(prev_title, prev_comment))
+            except Exception:
+                reply_text = None
 
-    # 7. 生成寓言
+    # 生成寓言
     try:
-        prompt = build_fable_prompt(concept_name, field, reply_context)
-        fable_content = call_llm(prompt)
-
-        # 清理可能的 markdown 代码块标记
+        fable_content = call_llm(build_fable_prompt(concept_name, field, reply_context))
         fable_content = fable_content.strip()
-        if fable_content.startswith("```html"):
-            fable_content = fable_content[7:]
-        if fable_content.startswith("```"):
-            fable_content = fable_content[3:]
+        for prefix in ["```html", "```"]:
+            if fable_content.startswith(prefix):
+                fable_content = fable_content[len(prefix):]
         if fable_content.endswith("```"):
             fable_content = fable_content[:-3]
         fable_content = fable_content.strip()
-
-        logger.info(f"寓言内容已生成 ({len(fable_content)} 字符)")
+        logger.info(f"内容生成完毕 ({len(fable_content)} 字符)")
     except Exception as e:
         logger.error(f"寓言生成失败: {e}")
-        return
+        return False
 
-    # 8. 查找关联篇目
-    related = concept_manager.get_related_concepts(concepts_data, concept_name)
+    # 关联篇目
     related_links = []
-    for r_name in related:
+    for r_name in concept_manager.get_related_concepts(concepts_data, concept_name):
         r_num = concept_manager.find_story_number_for_concept(r_name)
         if r_num:
             safe = r_name.replace("/", "-").replace("\\", "-").replace(" ", "_")
-            related_links.append({
-                "number": r_num,
-                "name": r_name,
-                "file": f"{r_num:03d}_{safe}.html",
-            })
+            related_links.append({"number": r_num, "name": r_name, "file": f"{r_num:03d}_{safe}.html"})
 
-    # 9. 生成 HTML 并保存
+    # 保存 HTML
     story_html = html_builder.generate_story_html(
         story_number=story_number,
         concept_name=concept_name,
@@ -244,24 +214,23 @@ def main():
         reply_title=prev_title,
         reply_comment=prev_comment,
         reply_text=reply_text,
-        related_links=related_links if related_links else None,
+        related_links=related_links or None,
         date_str=today,
     )
     filename = html_builder.save_story(story_number, concept_name, story_html)
-    logger.info(f"故事已保存: {filename}")
+    logger.info(f"已保存: {filename}")
 
-    # 10. 标记概念已使用
+    # 更新状态
     concept_manager.mark_concept_used(concepts_data, concept_name, story_number)
-
-    # 11. 更新状态
     state["current_number"] = story_number
     state["total_generated"] = story_number
     state["last_generated_date"] = today
     state["last_concept"] = concept_name
+    state["today_count"] = state.get("today_count", 0) + 1
 
-    # 12. 检查是否到达检查点
+    # 检查点
     if story_number % config.CHECKPOINT_INTERVAL == 0:
-        logger.info(f"🎯 到达第 {story_number} 篇检查点！系统暂停。")
+        logger.info(f"到达第 {story_number} 篇检查点！系统暂停。")
         state["is_paused"] = True
         state["checkpoints"].append({
             "at": story_number,
@@ -270,16 +239,143 @@ def main():
         })
 
     save_state(state)
+    return True
 
-    # 13. 更新目录首页
+
+# ============================================================
+# 主流程：每日批量生成
+# ============================================================
+def main():
+    logger.info("=" * 60)
+    logger.info("每日寓言生成系统启动（批量模式）")
+    logger.info(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info("=" * 60)
+
+    os.makedirs(config.STORIES_DIR, exist_ok=True)
+    os.makedirs(config.ASSETS_DIR, exist_ok=True)
+    git_pull()
+
+    state = load_state()
+    today = reset_daily_counters(state)
+    logger.info(f"状态: 总计{state['total_generated']}篇, 今日已生成{state.get('today_count',0)}篇, 暂停={state['is_paused']}")
+
+    if state["is_paused"]:
+        logger.info("系统已暂停，跳过生成。")
+        return
+
+    already = state.get("today_count", 0)
+    remaining = config.DAILY_COUNT - already
+    if remaining <= 0:
+        logger.info(f"今日 {config.DAILY_COUNT} 篇已全部生成，跳过。")
+        return
+
+    concepts_data = concept_manager.load_concepts()
+    generated = 0
+
+    for i in range(remaining):
+        if state["is_paused"]:
+            logger.info("检查点暂停，停止后续生成。")
+            break
+        check_disc = (i == 0 and already == 0)  # 仅今日第一篇检查讨论
+        ok = generate_one_fable(state, concepts_data, today, check_discussion=check_disc)
+        if ok:
+            generated += 1
+            time.sleep(2)  # API 间隔，避免限流
+        else:
+            logger.warning(f"第 {i+1} 篇生成失败，跳过。")
+            time.sleep(5)
+
+    # 更新目录 & 推送
     html_builder.update_index_html(state, concepts_data)
     logger.info("目录首页已更新")
-
-    # 14. 推送到 GitHub Pages
-    git_push(story_number, concept_name)
-
-    logger.info(f"[OK] 第 {story_number} 篇 [{concept_name}] 生成完毕！")
+    git_push(state["total_generated"], f"batch_{generated}_fables")
+    logger.info(f"[OK] 今日共生成 {generated} 篇寓言")
     logger.info("=" * 60)
+
+
+# ============================================================
+# 额外生成：处理 "再来一篇" 请求
+# ============================================================
+def extra_main():
+    logger.info("=" * 60)
+    logger.info("检查「再来一篇」请求")
+    logger.info("=" * 60)
+
+    os.makedirs(config.STORIES_DIR, exist_ok=True)
+    git_pull()
+
+    state = load_state()
+    today = reset_daily_counters(state)
+
+    if state["is_paused"]:
+        logger.info("系统已暂停，跳过。")
+        return
+
+    extra_done = state.get("today_extra_count", 0)
+    if extra_done >= config.MAX_EXTRA_PER_DAY:
+        logger.info(f"今日已额外生成 {extra_done} 篇，达到上限。")
+        return
+
+    # 读取 GitHub Issues 中的 ONE_MORE 请求
+    requests_count = count_extra_requests(state)
+    if requests_count <= 0:
+        logger.info("无「再来一篇」请求。")
+        return
+
+    to_generate = min(requests_count, config.MAX_EXTRA_PER_DAY - extra_done)
+    logger.info(f"发现 {requests_count} 个请求，将生成 {to_generate} 篇额外寓言。")
+
+    concepts_data = concept_manager.load_concepts()
+    generated = 0
+
+    for i in range(to_generate):
+        if state["is_paused"]:
+            break
+        ok = generate_one_fable(state, concepts_data, today)
+        if ok:
+            state["today_extra_count"] = state.get("today_extra_count", 0) + 1
+            save_state(state)
+            generated += 1
+            time.sleep(2)
+
+    if generated > 0:
+        html_builder.update_index_html(state, concepts_data)
+        git_push(state["total_generated"], f"extra_{generated}_fables")
+        logger.info(f"[OK] 额外生成 {generated} 篇")
+
+
+def count_extra_requests(state):
+    """从 GitHub Issues 读取未处理的 ONE_MORE 请求数"""
+    processed = set(state.get("processed_issue_ids", []))
+    try:
+        url = f"https://api.github.com/repos/{config.GITHUB_OWNER}/{config.GITHUB_REPO}/issues?state=open&per_page=20"
+        req = urllib.request.Request(url, headers={
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        })
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            issues = json.loads(resp.read().decode("utf-8"))
+
+        new_requests = 0
+        new_ids = []
+        for issue in issues:
+            if issue.get("title", "").strip().upper() == "ONE_MORE":
+                iid = issue["id"]
+                if iid not in processed:
+                    new_requests += 1
+                    new_ids.append(iid)
+
+        # 标记为已处理
+        if new_ids:
+            if "processed_issue_ids" not in state:
+                state["processed_issue_ids"] = []
+            state["processed_issue_ids"].extend(new_ids)
+            save_state(state)
+
+        return new_requests
+    except Exception as e:
+        logger.warning(f"读取 GitHub Issues 失败: {e}")
+        return 0
 
 
 # ============================================================
@@ -289,13 +385,9 @@ GIT_EXE = os.path.join(config.BASE_DIR, "git", "cmd", "git.exe")
 
 
 def _run_git(*args):
-    """执行 git 命令的内部辅助函数"""
     import subprocess
-
     if not os.path.exists(GIT_EXE):
-        logger.warning(f"Portable Git 未找到: {GIT_EXE}")
         return None
-
     result = subprocess.run(
         [GIT_EXE] + list(args),
         cwd=config.BASE_DIR,
@@ -309,43 +401,42 @@ def _run_git(*args):
 
 
 def git_pull():
-    """生成前从 GitHub 拉取最新内容（获取用户在网页上的留言）"""
     if not os.path.exists(GIT_EXE):
         return
-
     try:
         result = _run_git("pull", "origin", "main")
         if result and result.returncode == 0:
             logger.info("已从 GitHub 拉取最新内容")
-        else:
-            logger.warning("Git pull 未成功，使用本地版本继续")
     except Exception as e:
         logger.error(f"Git pull 异常: {e}")
 
 
-def git_push(story_number, concept_name):
-    """生成后自动 commit + push 到 GitHub"""
+def git_push(story_number, label):
     if not os.path.exists(GIT_EXE):
-        logger.warning(f"Portable Git 未找到，跳过推送。")
         return
-
     try:
         _run_git("add", "-A")
-        _run_git("commit", "-m", f"story {story_number:03d}: {concept_name}")
+        _run_git("commit", "-m", f"auto: {label} (up to #{story_number:03d})")
         result = _run_git("push", "origin", "main")
-
         if result and result.returncode == 0:
             logger.info("GitHub Pages 推送成功")
-        else:
-            logger.warning(f"推送可能失败")
-
     except Exception as e:
         logger.error(f"Git 推送异常: {e}")
 
 
+# ============================================================
+# CLI 入口
+# ============================================================
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="每日寓言生成系统")
+    parser.add_argument("--extra", action="store_true", help="处理「再来一篇」请求")
+    args = parser.parse_args()
+
     try:
-        main()
+        if args.extra:
+            extra_main()
+        else:
+            main()
     except Exception as e:
         logger.error(f"致命错误: {e}", exc_info=True)
         sys.exit(1)

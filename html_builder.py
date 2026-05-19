@@ -347,10 +347,17 @@ def update_index_html(state_data, concepts_data):
         <div class="toc-grid">
 {toc_entries}
         </div>
+
+        <div class="one-more-section">
+            <a class="one-more-btn" href="https://github.com/{config.GITHUB_OWNER}/{config.GITHUB_REPO}/issues/new?title=ONE_MORE&body=%E5%86%8D%E6%9D%A5%E4%B8%80%E7%AF%87%EF%BC%81" target="_blank" rel="noopener">
+                &#10024; 再来一篇
+            </a>
+            <p class="one-more-hint">&#x1F4A1; 每天最多追加 {config.MAX_EXTRA_PER_DAY} 篇 &middot; 点击后在 GitHub 提交请求，下一轮运行时自动生成</p>
+        </div>
     </main>
 
     <footer class="page-footer">
-        <p>每日自动生成 · 概念池覆盖 {len(concepts_data['fields'])} 个学科领域</p>
+        <p>每日自动生成 {config.DAILY_COUNT} 篇 · 概念池覆盖 {len(concepts_data['fields'])} 个学科领域</p>
     </footer>
 </div>
 </div>

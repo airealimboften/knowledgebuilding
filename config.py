@@ -40,6 +40,8 @@ GISCUS_CATEGORY_ID = "DIC_kwDOSe7aUM4C9KUw"
 # ============================================================
 # 生成设置
 # ============================================================
+DAILY_COUNT = 10                # 每天自动生成的篇数
+MAX_EXTRA_PER_DAY = 3           # "再来一篇" 每天最多额外篇数
 CHECKPOINT_INTERVAL = 100       # 每100篇暂停一次
 FABLE_TARGET_LENGTH = 800       # 寓言目标字数
 REQUEST_TIMEOUT = 60            # API请求超时（秒）
