@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第011篇 · 区块链 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「区块链」(计算机科学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #55efc420;
+            color: #55efc4;
+            border-color: #55efc440;
+        }
+        .fable-header .story-number {
+            background: #55efc415;
+            color: #55efc4;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 011 篇</span>
+        <h1>区块链</h1>
+        <div class="meta">
+            <span class="field-tag">计算机科学</span>
+            <time datetime="2026-05-19">2026-05-19</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>从前，有一座繁华的贸易城，城里住着三位商人：<strong>金算盘</strong>、<strong>铜秤</strong>和<strong>铁账簿</strong>。他们每日交易，却总因记账纠纷争吵不休。</p>
+<p>金算盘说：“我借你十袋米，你记在自家账上即可！”铜秤点头，但转身却忘了。铁账簿质问时，铜秤一拍脑袋：“我明明记了，可纸被老鼠啃了！”三人互相猜疑，生意越来越糟。</p>
+<p>一天，一位白发智者路过，递给他们三块<mark>透明石板</mark>：“从今日起，每笔交易都刻在三块石板上，每人各持一块。谁想改账，必须让另外两人同时同意。”金算盘狐疑：“若有人摔碎石板呢？”智者笑道：“每块石板都会自动复制到你们手中——哪怕碎了一百块，只要还有一块留存，账目就不灭。”</p>
+<p>起初，三人嫌麻烦：每笔交易都要聚在一起核对、刻写。但日子久了，他们发现所有账目都<strong>公开可见</strong>，无人能篡改。铜秤想偷偷多记一袋米，却发现金算盘和铁账簿的石板上根本不会出现这笔账。铁账簿感叹：“这就像把账本刻在<mark>全城的墙壁</mark>上，谁都能看，谁也改不了。”</p>
+<p>后来，更多商人加入。智者又发下石板，并教会他们一个规矩：新加入者必须验证从第一笔到当前的所有交易记录，确认无误才能参与。全城的交易因此变得<strong>透明、可信、不可篡改</strong>。商人们终于明白：信任不需要靠一人担保，而是靠<strong>所有人共同见证</strong>。</p>
+
+<p class="moral">寓意点睛：区块链就像一座由众人共同维护的透明账本——每个参与者都拥有完整的副本，任何篡改都会立刻被全网识破，信任因此不再依赖某个权威，而是源于所有人共同见证的共识。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p>区块链是一种<strong>去中心化</strong>的分布式账本技术。数据以“区块”为单位，每个区块通过密码学方式链接到前一个区块，形成一条不可篡改的链条。所有参与者共同维护这条链，任何修改都需要全网多数算力或节点的共识，从而实现了在无需互信的环境下建立可信的协作机制。</p>
+<table>
+  <caption>传统记账 vs 区块链记账</caption>
+  <thead>
+    <tr><th>维度</th><th>传统记账（金算盘时代）</th><th>区块链记账（智者石板）</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>账本存储</td><td>中心化，单点保管</td><td>分布式，人人持有副本</td></tr>
+    <tr><td>修改权限</td><td>个别人可单方修改</td><td>需全网多数同意</td></tr>
+    <tr><td>信任基础</td><td>依赖个人信誉或权威</td><td>依赖数学和共识机制</td></tr>
+    <tr><td>数据安全性</td><td>易丢失、被篡改</td><td>损坏部分副本也不影响整体</td></tr>
+  </tbody>
+</table>
+<svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto; display:block; margin:1em 0;">
+  <g fill="none" stroke="#4a90d9" stroke-width="2">
+    <!-- 三个区块 -->
+    <rect x="20" y="30" width="80" height="60" rx="8" stroke="#2c6aa0" fill="#e0f0ff"/>
+    <rect x="160" y="30" width="80" height="60" rx="8" stroke="#2c6aa0" fill="#e0f0ff"/>
+    <rect x="300" y="30" width="80" height="60" rx="8" stroke="#2c6aa0" fill="#e0f0ff"/>
+    <!-- 链接箭头 -->
+    <path d="M100,60 L140,60" stroke="#2c6aa0" stroke-width="3"/>
+    <path d="M130,50 L145,60 L130,70" fill="#2c6aa0" stroke="none"/>
+    <path d="M240,60 L280,60" stroke="#2c6aa0" stroke-width="3"/>
+    <path d="M270,50 L285,60 L270,70" fill="#2c6aa0" stroke="none"/>
+    <!-- 区块内文字 -->
+    <text x="60" y="65" text-anchor="middle" fill="#2c6aa0" font-size="14" font-family="sans-serif">区块1</text>
+    <text x="200" y="65" text-anchor="middle" fill="#2c6aa0" font-size="14" font-family="sans-serif">区块2</text>
+    <text x="340" y="65" text-anchor="middle" fill="#2c6aa0" font-size="14" font-family="sans-serif">区块3</text>
+    <!-- 底部说明 -->
+    <text x="200" y="120" text-anchor="middle" fill="#666" font-size="12" font-family="sans-serif">每个区块包含哈希值，链接到前一个区块</text>
+    <text x="200" y="140" text-anchor="middle" fill="#999" font-size="11" font-family="sans-serif">篡改任一区块都会导致链条断裂，全网立刻发现</text>
+  </g>
+</svg>
+<p>如图所示，每个区块都包含前一个区块的“指纹”（哈希值），形成一条锁链。一旦有人试图修改某个区块的数据，其后的所有区块都会失效，必须重新计算整个链条——而“全网”会立刻发现不一致，从而拒绝篡改。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="011 区块链"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

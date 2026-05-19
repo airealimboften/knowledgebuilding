@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第010篇 · 端粒 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「端粒」(生物学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #00cec920;
+            color: #00cec9;
+            border-color: #00cec940;
+        }
+        .fable-header .story-number {
+            background: #00cec915;
+            color: #00cec9;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 010 篇</span>
+        <h1>端粒</h1>
+        <div class="meta">
+            <span class="field-tag">生物学</span>
+            <time datetime="2026-05-19">2026-05-19</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>在一座雄伟的城堡中，住着一位年迈的国王。他的生命如同一根燃烧的蜡烛，烛芯上套着一个小小的金色保护环——这就是他的“岁月之环”。每度过一年，这个环就会磨损一分，变短一点。</p>
+<p>国王每天都要召见他的两位大臣：<strong>分裂大臣</strong>和<strong>修复大师</strong>。“分裂大臣”负责下令让城堡的工匠们不断复制国王的画像，每一幅新画像都要挂满城堡的墙壁。然而，复制画像的工序总是从画布的边缘开始——“岁月之环”就在这个过程中被悄悄消耗。当“修复大师”赶来修补画像时，他只能遗憾地摇头：“陛下，画像可以复制，但环上的金粉无法重生。”</p>
+<p>有一天，一位神秘的旅行者献上一瓶“青春之泉”。国王喝下后，惊讶地发现自己的“岁月之环”竟然重新变长了！原来，这瓶泉水里藏着一种叫<mark>“端粒酶”</mark>的魔法药剂，它能修补磨损的金色环扣。旅行者警告说：“陛下，这泉水极其珍贵，并非取之不尽。唯有在年轻的火焰上，它才最容易生效。”</p>
+<p>国王恍然大悟：他的“岁月之环”就是<strong>端粒</strong>，每一次细胞分裂（复制画像）都会让它缩短；而“端粒酶”就是那瓶泉水，能延缓环的消耗。可是，当环短到不能再短时，火焰就会熄灭——这就是衰老的真相。</p>
+
+<p class="moral">寓意点睛：端粒就像生命火焰的保护环，每分裂一次就缩短一分；端粒酶如同珍贵的青春甘泉，能延缓磨损，却无法永续。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p>端粒是染色体末端的保护性结构，由重复的DNA序列和蛋白质组成，类似于鞋带末端的塑料帽。每次细胞分裂，端粒就会缩短；当端粒过短时，细胞会停止分裂或凋亡。端粒酶能合成端粒，但在大多数体细胞中活性较低，这解释了细胞衰老的机制。</p>
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse; margin:10px 0;">
+<thead>
+<tr><th>角色</th><th>对应生物学概念</th><th>作用</th></tr>
+</thead>
+<tbody>
+<tr><td>金色保护环</td><td><strong>端粒</strong></td><td>保护染色体末端，防止降解</td></tr>
+<tr><td>分裂大臣</td><td><strong>细胞分裂</strong></td><td>每次分裂消耗部分端粒</td></tr>
+<tr><td>修复大师</td><td><strong>普通修复机制</strong></td><td>无法延长端粒</td></tr>
+<tr><td>青春之泉</td><td><strong>端粒酶</strong></td><td>延长端粒，延缓衰老</td></tr>
+</tbody>
+</table>
+<svg viewBox="0 0 300 60" width="300" height="60" style="display:block; margin:10px auto;">
+  <!-- 染色体主体 -->
+  <line x1="20" y1="30" x2="280" y2="30" stroke="#4a90d9" stroke-width="4" stroke-linecap="round"/>
+  <!-- 端粒（左端） -->
+  <circle cx="20" cy="30" r="10" fill="none" stroke="#f5a623" stroke-width="2"/>
+  <text x="10" y="18" font-size="8" fill="#f5a623">端粒</text>
+  <!-- 端粒（右端） -->
+  <circle cx="280" cy="30" r="10" fill="none" stroke="#f5a623" stroke-width="2"/>
+  <text x="270" y="45" font-size="8" fill="#f5a623">端粒</text>
+  <!-- 内部序列 -->
+  <text x="120" y="25" font-size="10" fill="#333">染色体DNA</text>
+  <!-- 箭头指示缩短 -->
+  <line x1="20" y1="40" x2="20" y2="50" stroke="#d0021b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="5" y="58" font-size="7" fill="#d0021b">分裂缩短</text>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d0021b"/>
+    </marker>
+  </defs>
+</svg>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="010 端粒"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

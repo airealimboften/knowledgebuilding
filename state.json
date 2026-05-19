@@ -1,8 +1,10 @@
 {
-    "current_number": 3,
-    "total_generated": 3,
+    "current_number": 13,
+    "total_generated": 13,
     "is_paused": false,
-    "last_generated_date": "2026-05-18",
-    "last_concept": "奥卡姆剃刀",
-    "checkpoints": []
+    "last_generated_date": "2026-05-19",
+    "last_concept": "艺术场域",
+    "checkpoints": [],
+    "today_count": 10,
+    "today_extra_count": 0
 }

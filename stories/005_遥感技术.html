@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第005篇 · 遥感技术 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「遥感技术」(地理学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #81ecec20;
+            color: #81ecec;
+            border-color: #81ecec40;
+        }
+        .fable-header .story-number {
+            background: #81ecec15;
+            color: #81ecec;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 005 篇</span>
+        <h1>遥感技术</h1>
+        <div class="meta">
+            <span class="field-tag">地理学</span>
+            <time datetime="2026-05-19">2026-05-19</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>很久以前，在一片广袤的森林里，住着一位聪明的老鼹鼠。他双目失明，却总能知道森林里哪里有最新鲜的浆果，哪里的溪水最甘甜。其他动物都很佩服他，却又觉得神秘。</p>
+<p>小狐狸忍不住问：“鼹鼠爷爷，您看不见，是怎么知道森林里的一切的？”</p>
+<p>老鼹鼠微微一笑，指着地上一根细细的树根说：“我虽然看不见，但我的爪子能‘触摸’到树木摇晃的震动，我的鼻子能嗅到远处花开的香气，我的耳朵能听见云朵碰撞的低语。我从不靠近，却知道它们的一切变化。”</p>
+<p>小狐狸恍然大悟：“原来您是用大地、风和空气做‘眼睛’！”</p>
+<p>老鼹鼠点点头：“没错，我不必去到每个地方，却能感知整个森林的秘密。这就是我的‘千里眼’。”</p>
+
+<p class="moral">寓意点睛：真正的洞察，不在于亲临其境，而在于学会借助他物感知远方——无需触碰，便能洞悉。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p>遥感技术是一种不直接接触目标物体，通过传感器（如卫星或无人机上的相机、雷达）接收目标反射或发射的电磁波信号，从而获取其形状、位置、性质等信息的技术。它能帮助人类“看见”远方的山川、农田、城市，甚至地球表面以下的信息。</p>
+</div>
+
+<!-- 补充图解：遥感过程示意 -->
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:1em auto;">
+  <!-- 卫星 -->
+  <rect x="150" y="10" width="80" height="30" rx="5" fill="#a0c4ff" stroke="#6b9bd2" stroke-width="1.5" />
+  <text x="190" y="30" font-size="12" fill="#2c3e50" text-anchor="middle" font-weight="bold">卫星（传感器）</text>
+  <!-- 信号线（电磁波） -->
+  <path d="M 150 45 Q 130 80 120 120" fill="none" stroke="#f7a072" stroke-width="2" stroke-dasharray="5,3" />
+  <path d="M 230 45 Q 250 80 260 120" fill="none" stroke="#f7a072" stroke-width="2" stroke-dasharray="5,3" />
+  <!-- 地面目标 -->
+  <rect x="60" y="120" width="80" height="50" rx="4" fill="#dcedc1" stroke="#88a87a" stroke-width="1.5" />
+  <text x="100" y="150" font-size="11" fill="#2c3e50" text-anchor="middle">农田</text>
+  <rect x="250" y="120" width="80" height="50" rx="4" fill="#ffd6a5" stroke="#e0a96d" stroke-width="1.5" />
+  <text x="290" y="150" font-size="11" fill="#2c3e50" text-anchor="middle">城市</text>
+  <!-- 箭头/标注 -->
+  <text x="130" y="85" font-size="10" fill="#6b9bd2" transform="rotate(-30, 130, 85)">反射信号</text>
+  <text x="240" y="85" font-size="10" fill="#6b9bd2" transform="rotate(30, 240, 85)">发射信号</text>
+</svg>
+
+<!-- 表格对比：遥感与传统观测 -->
+<table style="margin: 1em auto; border-collapse: collapse; width: 90%; max-width: 500px;">
+  <caption style="font-weight: bold; margin-bottom: 0.3em;">传统观测 vs 遥感</caption>
+  <thead>
+    <tr style="background-color: #e8f0fe;">
+      <th style="border: 1px solid #ccc; padding: 6px 10px;">特性</th>
+      <th style="border: 1px solid #ccc; padding: 6px 10px;">传统观测</th>
+      <th style="border: 1px solid #ccc; padding: 6px 10px;">遥感</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;"><strong>接触方式</strong></td>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;">必须亲临现场</td>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;">远距离 <mark>非接触</mark></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;"><strong>覆盖范围</strong></td>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;">狭小、局限</td>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;"><strong>大面积、甚至全球</strong></td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;"><strong>信息维度</strong></td>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;">肉眼可见光</td>
+      <td style="border: 1px solid #ccc; padding: 6px 10px;">可见光、红外、微波等多波段</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="005 遥感技术"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>
