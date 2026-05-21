@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第015篇 · 手性分子 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「手性分子」(化学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #00b89420;
+            color: #00b894;
+            border-color: #00b89440;
+        }
+        .fable-header .story-number {
+            background: #00b89415;
+            color: #00b894;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 015 篇</span>
+        <h1>手性分子</h1>
+        <div class="meta">
+            <span class="field-tag">化学</span>
+            <time datetime="2026-05-20">2026-05-20</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>在分子王国里，有一对孪生兄弟——左左和右右。他们长得一模一样，连镜子都分不清区别。国王决定举办一场盛大的宴会，所有分子都必须参加。</p>
+<p>左左满心欢喜地走向宫殿，却在门口被侍卫拦住。宫殿的大门是一道奇特的螺旋门，只能让右手螺旋的分子通过。左左是左手螺旋，尽管他用力扭转身体，却始终无法穿过那道门。右右却轻松地走了进去，像鱼儿游入水中。</p>
+<p>“为什么我不能进去？”左左委屈地喊道。侍卫说：“这不是你不够好，只是你的形状与门的旋向相反。你的镜像兄弟能进去，但你不能。”</p>
+<p>左左站在门外，看着宫殿里欢声笑语的右右，终于明白了：他和右右就像左右手，看似完全一样，却永远无法重合。国王后来告诉他：“在化学的世界里，你们被称为<strong>手性</strong>——彼此是对方的镜像，却无法叠合。这种差异，决定了你们能参与不同反应的资格。”</p>
+<p class="moral">寓意点睛：手性分子如同左右手，镜像相似却无法重合；这看似细微的差异，决定了它们在生命与化学反应中扮演截然不同的角色。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p>手性分子是指与其镜像不能完全重合的分子，正如左手与右手互为镜像却无法叠合。这种不对称性在生物化学中至关重要，因为生物体（如酶和受体）通常只识别某一种手性的分子。例如，<mark>（S）-反应停</mark>可缓解孕吐，而<mark>（R）-反应停</mark>则具有致畸性，这正是手性差异的典型后果。</p>
+
+<table>
+  <caption>手性分子的对比示例</caption>
+  <thead>
+    <tr>
+      <th>手性类型</th>
+      <th>特性</th>
+      <th>例子（药物）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>左旋（L-）</td>
+      <td>与左手相似，通常被生物体识别</td>
+      <td>L-多巴（治疗帕金森）</td>
+    </tr>
+    <tr>
+      <td>右旋（D-）</td>
+      <td>与右手相似，可能无效或有害</td>
+      <td>D-多巴（无药理活性）</td>
+    </tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:1em auto; max-width:100%;">
+  <!-- 左手（镜像） -->
+  <g transform="translate(80, 60)">
+    <text x="0" y="-10" fill="#4a90d9" font-size="14" font-family="sans-serif">左手分子</text>
+    <path d="M 0,0 L -20,-40 L -10,-50 L 10,-30 L 20,-10 Z" fill="none" stroke="#4a90d9" stroke-width="2"/>
+    <path d="M -10,-50 L -10,-70" fill="none" stroke="#4a90d9" stroke-width="2"/>
+    <path d="M 12,-28 L 30,-40" fill="none" stroke="#4a90d9" stroke-width="2"/>
+  </g>
+  <!-- 中间镜子 -->
+  <line x1="200" y1="30" x2="200" y2="170" stroke="#b0b0b0" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="180" y="190" fill="#888" font-size="12" font-family="sans-serif">镜像平面</text>
+  <!-- 右手（镜像的镜像） -->
+  <g transform="translate(280, 60) scale(-1,1)">
+    <text x="0" y="-10" fill="#e67e22" font-size="14" font-family="sans-serif" transform="scale(-1,1)">右手分子</text>
+    <path d="M 0,0 L -20,-40 L -10,-50 L 10,-30 L 20,-10 Z" fill="none" stroke="#e67e22" stroke-width="2"/>
+    <path d="M -10,-50 L -10,-70" fill="none" stroke="#e67e22" stroke-width="2"/>
+    <path d="M 12,-28 L 30,-40" fill="none" stroke="#e67e22" stroke-width="2"/>
+  </g>
+  <!-- 不可重合标记 -->
+  <text x="160" y="100" fill="#d9534f" font-size="20" font-family="sans-serif">≠</text>
+  <text x="140" y="120" fill="#999" font-size="10" font-family="sans-serif">无法叠合</text>
+</svg>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="015 手性分子"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

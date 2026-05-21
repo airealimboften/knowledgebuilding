@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第029篇 · 基因漂变 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「基因漂变」(生物学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #00cec920;
+            color: #00cec9;
+            border-color: #00cec940;
+        }
+        .fable-header .story-number {
+            background: #00cec915;
+            color: #00cec9;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 029 篇</span>
+        <h1>基因漂变</h1>
+        <div class="meta">
+            <span class="field-tag">生物学</span>
+            <time datetime="2026-05-21">2026-05-21</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>在一片遥远的山谷里，有两个相邻的池塘——东池和西池。它们之间有一条狭窄的水道相连，但水流缓慢，只有少数鱼虾偶尔穿行。池塘里住着一种小彩鱼，有的鳞片是<mark>金色</mark>，有的是<mark>银色</mark>，还有的是<mark>蓝色</mark>。最初，两个池塘里的彩鱼数量差不多，每种颜色都占三分之一。</p>
+<p>一年夏天，山谷大旱，水道彻底干涸了。东池和西池从此隔绝，各自成了一座孤岛。起初，东池里还有一百条彩鱼，其中三十三条金色、三十三条银色、三十四条蓝色。西池也一样。但日子一天天过去，东池的鱼开始发生奇怪的变化。</p>
+<p>有一年春天，东池里的一条金色母鱼恰好产下了很多后代，而这些小鱼又恰好大多继承了金色鳞片。于是，东池的金色鱼突然多了起来，占了池塘的一半。这并非因为它们更强壮或更聪明，纯粹是<strong>运气</strong>——那条母鱼刚好活了下来，刚好产卵，刚好她的孩子也活了下来。而另一边，西池里的一棵大树倒下时，恰好砸死了银色的鱼群中最多产的那几条，银色鱼的数量骤减，只剩下寥寥几条。这也不是因为银色鱼有什么缺点，只是<strong>偶然</strong>。</p>
+<p>又过了几年，一场山洪淹没了东池，大部分蓝色鱼被冲走，只剩几条金色和银色。金色鱼因为数量本来就多，幸存下来后继续繁衍，最终东池里几乎全是金色鱼了。银色鱼只剩两三条，孤零零地游着。西池的情况则相反：蓝色鱼在一个雨季里恰好躲过了一次泥石流，而金色鱼却因为聚在浅滩被鸟啄食殆尽。最后，西池成了蓝色鱼的天下。</p>
+<p>几十年后，两个池塘的彩鱼已经完全不一样了——东池几乎全是金色，偶尔有一两条银色；西池则全是蓝色，金色和银色都消失了。它们各自的颜色并不是因为适应环境，也不是因为优胜劣汰，而是因为一系列<strong>偶然事件</strong>在小小的种群中被放大了。</p>
+<p class="moral">寓意：<strong>基因漂变</strong>告诉我们，在孤立的小群体中，偶然的运气有时比适应和竞争更能决定一个特质的存亡。生命的多样性，并非全是自然的精心安排，也充满了命运的随机之笔。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p><strong>基因漂变</strong>（Genetic Drift）是进化生物学中的一个核心概念，指由于<mark>随机抽样</mark>导致的等位基因频率在种群中的随机波动。这种变化在小种群中尤为显著，因为偶然事件（如某个体恰好多繁殖了几只后代、或某个体意外死亡）可以显著地改变基因库的组成。与自然选择不同，基因漂变与个体的适应度无关，纯粹由<strong>概率</strong>驱动。长期来看，漂变会使一个等位基因要么在种群中<strong>固定</strong>（频率达到100%），要么<strong>消失</strong>（频率降为0），从而减少遗传多样性。这也是为什么孤立的小种群往往更容易因漂变而分化成不同的遗传特征。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="029 基因漂变"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

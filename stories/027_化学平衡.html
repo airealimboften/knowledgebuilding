@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第027篇 · 化学平衡 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「化学平衡」(化学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #00b89420;
+            color: #00b894;
+            border-color: #00b89440;
+        }
+        .fable-header .story-number {
+            background: #00b89415;
+            color: #00b894;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 027 篇</span>
+        <h1>化学平衡</h1>
+        <div class="meta">
+            <span class="field-tag">化学</span>
+            <time datetime="2026-05-21">2026-05-21</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>很久以前，在一片茂密的森林里，住着两位能干的工匠——火匠和水匠。火匠掌管着熔炉，能把坚硬的铁矿熔成铁水；水匠则守护着清泉，能让滚烫的铁水冷却成沉沉的铁锭。</p>
+<p>一天，工匠们决定合作：火匠将铁矿石放进熔炉，烈火熊熊，铁水奔涌而出。水匠立刻将冰冷的泉水浇上去，铁水瞬间冷却，变成坚硬的铁锭。然而，这样的合作并不总是顺利：火匠嫌水匠“灭了他的火”，水匠则怪火匠“把水烧得滚烫”。两人争吵不休。</p>
+<p>这时，森林里最年长的智者——风婆婆路过，她笑着说：“你们为何不试着让火和水共存呢？让火少一些，水多一些；或者火多一些，水少一些，看看会发生什么。”</p>
+<p>火匠和水匠觉得有理，便调整了火势和水流。火匠把炉火调小一些，水匠则把泉水放慢一些。奇迹发生了：铁矿石先熔化，但并未完全沸腾；泉水浇上去，铁水开始凝固，却并未瞬间冷却。熔炉里出现了一种奇妙的状态——铁水与铁锭同时存在，既不完全是流动的液体，也不完全是坚硬的固体，而是两者<strong>共存并相互制约</strong>。</p>
+<p>风婆婆解释道：“当火的力量和水的力量达到平衡时，铁水既不会完全凝固，也不会完全沸腾。火匠，你减少了火，铁水便不能完全熔化；水匠，你减少了水，铁水就不能完全冷却。你们二人<strong>各自退让一步</strong>，便创造出了一个稳定的平衡点。在这个点上，<mark>反应可以正向进行，也可以逆向进行，但整体上看，双方的力量相当，系统便不再继续变化</mark>。”</p>
+<p>火匠和水匠恍然大悟：原来<strong>合作并非单方面压制</strong>，而是让两种力量<strong>动态共存</strong>。从此，他们学会了调整火与水的比例，使熔炉始终保持在那种微妙的平衡状态——铁水与铁锭共存，既不会因火太旺而烧干泉水，也不会因水太多而熄灭熔炉。</p>
+<p class="moral">寓意：在封闭系统中，当正反两个方向的反应速率相等时，系统便达到动态平衡——看似静止，实则双方仍在悄悄博弈。真正的平衡不是一方的胜利，而是两种对抗力量在各自让步后达成的稳定共处。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p><strong>化学平衡</strong>指的是在<mark>可逆反应</mark>中，当<strong>正反应速率</strong>与<strong>逆反应速率相等</strong>时，反应体系中各物质的浓度不再随时间变化的状态。这种平衡是<strong>动态平衡</strong>，即反应并未停止，正逆反应仍在进行，只是宏观上表现稳定。正如寓言中火与水的博弈，调整任何一种条件（温度、浓度、压力等）都会打破平衡，系统会向减弱这种改变的方向移动，直至建立新的平衡——这就是<strong>勒夏特列原理</strong>。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="027 化学平衡"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

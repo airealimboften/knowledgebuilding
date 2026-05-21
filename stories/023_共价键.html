@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第023篇 · 共价键 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「共价键」(化学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #00b89420;
+            color: #00b894;
+            border-color: #00b89440;
+        }
+        .fable-header .story-number {
+            background: #00b89415;
+            color: #00b894;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 023 篇</span>
+        <h1>共价键</h1>
+        <div class="meta">
+            <span class="field-tag">化学</span>
+            <time datetime="2026-05-21">2026-05-21</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>在原子王国里，住着两个性格迥异的邻居——氢大哥和氯小妹。氢大哥只有一颗电子，却总想找个伴儿；氯小妹有七颗电子，渴望凑够八颗的圆满。氢大哥慷慨地说：“我分你一颗电子，咱们共用可好？”氯小妹摇摇头：“借来的终究不牢靠，不如我们各自拿出一颗，让它们手拉手，永远在一起。”</p>
+
+<p>于是，氢大哥献出自己的唯一电子，氯小妹也贡献一颗电子。这两颗电子不再属于任何一方，它们像两个淘气的孩子，在氢和氯之间快乐地奔跑、舞蹈，时而靠近氢大哥，时而依偎氯小妹。氢大哥因此有了稳定的“电子云”，氯小妹也终于凑齐了八颗电子的圆满。从此，氢和氯紧紧相连，谁也离不开谁，这就是化学世界里的<strong>共价键</strong>。</p>
+
+<p>可是，并非所有原子都这般慷慨。在另一个角落，钠大叔和氯小妹相遇了。钠大叔只有一颗电子，却舍不得分享，干脆把电子送给氯小妹，自己变成了<mark>正离子</mark>；氯小妹收下这颗电子，成了<mark>负离子</mark>。两种离子因电荷相吸而结合，这便是离子键。相比之下，共价键更讲究“共享”——没有谁失去，也没有谁得到，而是共同拥有。</p>
+
+<p>更有意思的是，氧原子有六颗电子，它需要两颗才能圆满。它遇见两个氢原子，便说：“你们每人出一颗电子，与我共享吧。”于是，一个氧原子和两个氢原子，通过两对共用电子的桥梁，形成了水分子。这就像三个人共同撑起一把伞，每个人都在伞下，谁也淋不到雨。</p>
+
+<p class="moral">寓意的核心在于：<strong>真正的联结不是占有，而是共享</strong>。共价键告诉我们，当两个个体都能放下“独占”的执念，拿出自己的一部分共同经营，就能形成比任何单独存在都更稳定的关系。这种“共享”不是牺牲，而是通过互相成全，让彼此都变得更完整。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p><strong>共价键</strong>是化学中两个原子通过<mark>共享电子对</mark>形成的化学键。与离子键中电子完全转移不同，共价键的电子云重叠在原子核之间，形成一种“电子桥梁”。每个原子贡献一个或多个未成对电子，这些电子为双方所共有，使每个原子都达到稳定的惰性气体电子构型。共价键的强度取决于共享电子对的数量（单键、双键或三键）以及原子核对电子的吸引力。共价键是构成绝大多数有机物和生物大分子的基础，从最简单的氢气（H₂）到复杂的DNA双螺旋结构，都离不开这种精妙的“共享”机制。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="023 共价键"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

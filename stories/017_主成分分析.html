@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第017篇 · 主成分分析 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「主成分分析」(统计学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #636e7220;
+            color: #636e72;
+            border-color: #636e7240;
+        }
+        .fable-header .story-number {
+            background: #636e7215;
+            color: #636e72;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 017 篇</span>
+        <h1>主成分分析</h1>
+        <div class="meta">
+            <span class="field-tag">统计学</span>
+            <time datetime="2026-05-20">2026-05-20</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>在一片广袤的果园里，住着一位智慧的老园丁。他照料着成百上千棵果树，但最近，他遇到了一个难题：每棵树都有许多特征——树高、树冠宽度、枝条数量、叶片大小、果实颜色深浅、果实的甜度、酸度、香气浓度……记录这些数据已经让他眼花缭乱，更不用说从中找出果园里最重要的规律了。</p>
+<p>一天，老园丁望着满园果树，忽然有了主意。他不再去数那些繁杂的枝叶，而是找来了一束最明亮的光线。他将光线投射向果园，发现所有树木的影子都被拉长、简化，最终落在一个方向上——那个方向最能体现树木生长与果实品质的共同趋势。老园丁惊喜地发现，原来这束光就是“<strong>主成分</strong>”，它把原本杂乱无章、相互关联的众多特征，浓缩成了少数几个最关键的线索，让他一眼就能看出哪些树长得最好、哪些果实最甜。</p>
+<p><mark>老园丁继续用第二束光从另一个角度照射，捕捉到了第一束光遗漏的细微差异，这便是第二主成分。</mark>他最终只用了两束光，就几乎完整地描绘出了整个果园的奥秘。从此，他不再为数百个数据而烦恼，而是轻松地通过这几个“影子”来管理果园。</p>
+<p class="moral">寓意点睛：<strong>主成分分析</strong>就是找到数据中最重要的“那束光”，把繁多、相关的特征浓缩成少数几个综合指标，从而抓住信息的主干，去芜存菁。</p>
+
+<div class="concept-explanation">
+  <h2>概念解析</h2>
+  <p>主成分分析（PCA）是一种统计学降维方法。它通过正交变换将一组可能存在相关性的变量转换为一组线性不相关的变量，这些新变量称为主成分。第一主成分能解释数据中最大的方差，后续主成分依次解释剩余方差，且彼此正交。PCA常用于数据可视化、特征提取和噪声过滤。</p>
+</div>
+
+<h2>主成分分析图解</h2>
+<svg width="360" height="240" viewBox="0 0 360 240" xmlns="http://www.w3.org/2000/svg" style="background: transparent;">
+  <!-- 原始数据点（二维散点） -->
+  <g fill="#a8c8e8" stroke="#5a7a9a" stroke-width="0.8">
+    <circle cx="60" cy="180" r="3"/>
+    <circle cx="80" cy="160" r="3"/>
+    <circle cx="100" cy="140" r="3"/>
+    <circle cx="120" cy="110" r="3"/>
+    <circle cx="140" cy="90" r="3"/>
+    <circle cx="160" cy="70" r="3"/>
+    <circle cx="180" cy="50" r="3"/>
+    <circle cx="90" cy="170" r="3"/>
+    <circle cx="110" cy="150" r="3"/>
+    <circle cx="130" cy="130" r="3"/>
+    <circle cx="150" cy="105" r="3"/>
+    <circle cx="170" cy="85" r="3"/>
+    <circle cx="190" cy="65" r="3"/>
+    <circle cx="70" cy="190" r="3"/>
+    <circle cx="200" cy="45" r="3"/>
+  </g>
+  <!-- 坐标轴：原始变量 -->
+  <line x1="30" y1="210" x2="280" y2="210" stroke="#b0b0b0" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="285" y="215" fill="#666" font-size="12">变量 1 →</text>
+  <line x1="30" y1="210" x2="30" y2="20" stroke="#b0b0b0" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="22" y="16" fill="#666" font-size="12">↑ 变量 2</text>
+  <!-- 第一主成分方向（较粗的实线箭头） -->
+  <defs>
+    <marker id="arrow1" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e05050"/>
+    </marker>
+  </defs>
+  <line x1="30" y1="210" x2="250" y2="60" stroke="#e05050" stroke-width="2.5" marker-end="url(#arrow1)"/>
+  <text x="240" y="50" fill="#e05050" font-size="13" font-weight="bold">第一主成分</text>
+  <!-- 第二主成分方向（较细的虚线箭头） -->
+  <defs>
+    <marker id="arrow2" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3a8a3a"/>
+    </marker>
+  </defs>
+  <line x1="130" y1="150" x2="60" y2="80" stroke="#3a8a3a" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#arrow2)"/>
+  <text x="30" y="70" fill="#3a8a3a" font-size="13" font-weight="bold">第二主成分</text>
+</svg>
+
+<h2>主成分分析对比表</h2>
+<table border="1" cellpadding="6" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 14px; background: #fafafa;">
+  <thead style="background: #e0e8f0;">
+    <tr>
+      <th>维度</th>
+      <th>原始数据（果园特征）</th>
+      <th>主成分分析后（影子线索）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>变量数量</strong></td>
+      <td>树高、冠宽、枝数、叶大小、果色、甜度、酸度、香气……（8维）</td>
+      <td>第一主成分（生长综合指数）、第二主成分（风味差异指数）</td>
+    </tr>
+    <tr>
+      <td><strong>变量关系</strong></td>
+      <td>高度相关：高树往往冠宽、果甜度与酸度反向关联</td>
+      <td>主成分之间<strong>不相关</strong>（正交），各自解释独立信息</td>
+    </tr>
+    <tr>
+      <td><strong>信息保留</strong></td>
+      <td>完整但冗余，难以直观比较</td>
+      <td>用2个综合指标即可保留大部分变异（>85%）</td>
+    </tr>
+    <tr>
+      <td><strong>易用性</strong></td>
+      <td>复杂，无法在二维平面展示</td>
+      <td>可轻松绘制散点图，一眼识别果园中的“优等生”</td>
+    </tr>
+  </tbody>
+</table>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="017 主成分分析"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>

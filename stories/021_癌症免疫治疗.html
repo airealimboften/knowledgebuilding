@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第021篇 · 癌症免疫治疗 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「癌症免疫治疗」(医学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #ff767520;
+            color: #ff7675;
+            border-color: #ff767540;
+        }
+        .fable-header .story-number {
+            background: #ff767515;
+            color: #ff7675;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 021 篇</span>
+        <h1>癌症免疫治疗</h1>
+        <div class="meta">
+            <span class="field-tag">医学</span>
+            <time datetime="2026-05-21">2026-05-21</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>从前，在一片茂密的森林里，有一个叫做“健康国”的王国。王国里住着无数勤劳的居民——细胞们。他们各司其职，让王国生机勃勃。但国王，也就是大脑，最担心的是一小撮叫“肿瘤”的坏蛋。这些坏蛋不知疲倦地分裂，抢夺其他居民的粮食，还释放毒素，试图毁灭整个王国。</p>
+
+<p>健康国有一支强大的军队，叫“免疫军团”。这支军队由各种白细胞组成，其中最有名的将军叫“T细胞”。T将军身披铠甲，手持利剑，日夜巡逻。他能识别每一个“自己人”和“入侵者”。只要发现变坏的肿瘤细胞，T将军就会立刻冲上去，将敌人撕碎。靠着免疫军团，健康国一度国泰民安。</p>
+
+<p>然而，肿瘤坏蛋们非常狡猾。他们发现，T将军虽然勇猛，但有一个弱点：他必须接到“攻击许可令”才能发起总攻。肿瘤坏蛋的首领“癌细胞”想出一个毒计。他在自己身上伪造了一块“免战牌”——一种叫<strong>PD-L1</strong>的蛋白。当T将军走近时，癌细胞便举起免战牌，假装说：“我是自己人，别打我！”T将军的剑上有一个“安全检查哨”——<strong>PD-1</strong>受体，一旦识别到免战牌，就会发出指令：“放松警惕，不要开火。”就这样，T将军一次次被蒙蔽，肿瘤王国日渐壮大，健康国岌岌可危。</p>
+
+<p>国王召集了全国最聪明的药物大臣。大臣们夜以继日地研究，终于发明了一种神奇的<mark>“解药”</mark>——<strong>免疫检查点抑制剂</strong>。这种解药像一把万能钥匙，能够精准地插进T将军剑上的PD-1检查哨里，把伪装的免战牌信号彻底堵住。T将军恢复了火眼金睛，再也看不到“自己人”的假象，只看到敌人！一声令下，免疫军团如潮水般涌向肿瘤，将癌细胞围剿消灭。健康国重新恢复了和平。</p>
+
+<p class="moral">寓意： 敌人常会披上友军的伪装，蒙蔽我们的防御。真正的智慧，不是消灭卫士，而是<strong>撕下敌人的面具</strong>，唤醒沉睡的力量。癌症免疫治疗正是如此：它不直接攻击癌细胞，而是<mark>解除免疫系统的“刹车”</mark>，让身体自己的军队重新识别并痛击敌人。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p><strong>癌症免疫治疗</strong>是近年来最具革命性的抗癌疗法之一。与传统化疗、放疗直接杀伤癌细胞不同，它通过激活或增强人体自身的免疫系统来对抗肿瘤。寓言中的“T将军”对应人体内的<mark>T细胞</mark>，它们是免疫系统的核心杀手。肿瘤细胞会狡猾地利用<strong>PD-L1蛋白</strong>与T细胞表面的<strong>PD-1受体</strong>结合，向T细胞发送“停止攻击”的<mark>抑制信号</mark>，从而逃避免疫追杀。这就像癌细胞给T细胞戴上了“眼罩”。</p>
+<p>《寓言》中的“解药”即<strong>免疫检查点抑制剂</strong>（如PD-1/PD-L1抑制剂），它们像一把扳手，精准卡住这个“刹车”机制，重新激活T细胞的杀伤功能。这种疗法已在<strong>黑色素瘤、肺癌、肾癌</strong>等多种癌症中取得突破性疗效。但值得注意的是，它也可能引发免疫系统过度激活导致的副作用，如免疫性肺炎、肠炎等，需要医生严密监控。癌症免疫治疗的本质是：<mark>武装你的身体，让它成为最强大的抗癌武器</mark>。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="021 癌症免疫治疗"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>
