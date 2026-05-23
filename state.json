@@ -1,10 +1,10 @@
 {
-    "current_number": 29,
-    "total_generated": 29,
+    "current_number": 31,
+    "total_generated": 31,
     "is_paused": false,
-    "last_generated_date": "2026-05-21",
-    "last_concept": "基因漂变",
+    "last_generated_date": "2026-05-23",
+    "last_concept": "索绪尔符号学",
     "checkpoints": [],
-    "today_count": 10,
+    "today_count": 2,
     "today_extra_count": 0
 }

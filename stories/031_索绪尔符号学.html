@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第031篇 · 索绪尔符号学 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「索绪尔符号学」(语言学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #74b9ff20;
+            color: #74b9ff;
+            border-color: #74b9ff40;
+        }
+        .fable-header .story-number {
+            background: #74b9ff15;
+            color: #74b9ff;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 031 篇</span>
+        <h1>索绪尔符号学</h1>
+        <div class="meta">
+            <span class="field-tag">语言学</span>
+            <time datetime="2026-05-23">2026-05-23</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>在遥远的古代，有一座名为“言灵”的城池。城中住着两位匠人，一位叫“能指”，一位叫“所指”。他们各自掌管着城中最重要的两座宝库：一座存放着世间万物的名称与声音，另一座存放着万物的本质与意义。</p>
+<p>能指匠人每日敲打音节，将“树”的声音刻在铜板上，将“水”的流淌声编成丝线。他的宝库里堆满了声响与形状，却无人知晓这些符号究竟指向何物。所指匠人则深居地宫，他握着一面铜镜，镜中映出树根的蜿蜒、水流的澄澈——这些是事物的灵魂，却无法被世人看见。</p>
+<p>有一日，国王下令：必须让城民们能通过语言指认万物。两位匠人被召入王宫，他们第一次相遇。能指摊开满手的音节，所指举起泛光的铜镜，两者刚一触碰，奇迹发生了——当“树”这个声音与镜中树根缠绕的影像结合时，城民们忽然脱口而出：“那是树！” 原来，语言并非天生附着于事物，而是声音与概念的契约。</p>
+<p>然而不久后，邻国的使者来访，指着自己的王冠说：“这叫‘刺冠’。”言灵城民们面面相觑——同样的金色环状物，他们称为“王冠”。能指匠人恍然大悟：符号的意义并非固定，而是由共同体的约定赋予。所指匠人补充道：“若没有你们心中对‘尊贵’的理解，这金环不过是金属罢了。”</p>
+<p>从此，言灵城立下铁律：每一枚符号都像一枚硬币，一面刻着听得见摸得着的“能指”，另一面刻着需要用心理解的“所指”，二者不可分割，如同水的两面——波光与深渊。城民们终于明白，他们并非在创造语言，而是用约定俗成的“任意性”，将声音与概念牢牢焊接成一座座桥梁。</p>
+<p class="moral">寓意：语言不是世界的镜子，而是我们与世界的契约。符号的意义，来自能指（声音/形式）与所指（概念/意义）之间不可分割的咬合，以及共同体的集体约定——如同一枚硬币的两面，缺一不可。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p><strong>索绪尔符号学</strong>是瑞士语言学家费尔迪南·德·索绪尔提出的核心理论。他将语言符号拆解为两部分：<mark>能指</mark>（如声音、文字等可感知的形式）与<mark>所指</mark>（如心理概念、意义）。二者之间的关系是<strong>任意性</strong>的——例如“树”这个发音与树木的概念没有必然联系，完全由社会约定俗成。同时，符号的价值取决于它在整个语言系统中的差异关系（如“王冠”与“刺冠”因文化差异而不同）。这一理论奠定了现代结构主义语言学的基础，强调语言是一个自足的符号系统，意义产生于符号之间的差异与关联。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="031 索绪尔符号学"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>
