@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第035篇 · 再生医学 — 每日寓言</title>
+    <meta name="description" content="以寓言方式解说「再生医学」(医学) 的核心概念">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fable-header .field-tag {
+            background: #ff767520;
+            color: #ff7675;
+            border-color: #ff767540;
+        }
+        .fable-header .story-number {
+            background: #ff767515;
+            color: #ff7675;
+        }
+
+#auth-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-primary, #0a0a12);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999;
+}
+.auth-box {
+    text-align: center; padding: 48px 40px;
+    background: var(--bg-card, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 24px; backdrop-filter: blur(20px);
+    max-width: 380px; width: 90%;
+}
+.auth-icon { font-size: 3rem; margin-bottom: 16px; }
+.auth-box h2 {
+    font-family: var(--font-serif); font-size: 1.4rem;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; margin-bottom: 8px;
+}
+.auth-subtitle { color: var(--text-muted, #5a5a6a); font-size: 0.9rem; margin-bottom: 24px; }
+#auth-input {
+    width: 100%; padding: 12px 16px; border: 1px solid var(--border-glass, rgba(255,255,255,0.08));
+    border-radius: 12px; background: rgba(255,255,255,0.05);
+    color: var(--text-primary, #e8e6e3); font-size: 1rem;
+    outline: none; margin-bottom: 16px; text-align: center;
+}
+#auth-input:focus { border-color: var(--accent-color, #667eea); }
+#auth-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 12px;
+    background: var(--accent-gradient, linear-gradient(135deg,#667eea,#764ba2));
+    color: white; font-size: 1rem; font-weight: 600; cursor: pointer;
+    transition: opacity 0.3s;
+}
+#auth-btn:hover { opacity: 0.85; }
+#auth-error { color: #ff7675; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    </style>
+</head>
+<body>
+
+<div id="auth-overlay">
+    <div class="auth-box">
+        <div class="auth-icon">&#128274;</div>
+        <h2>&#27599;&#26085;&#23493;&#35328; &middot; &#27010;&#24565;&#20043;&#26097;</h2>
+        <p class="auth-subtitle">&#35831;&#36755;&#20837;&#35775;&#38382;&#23494;&#30721;</p>
+        <input type="password" id="auth-input" placeholder="&#23494;&#30721;" />
+        <button id="auth-btn">&#36827;&#20837;</button>
+        <p id="auth-error">&#23494;&#30721;&#38169;&#35823;&#65292;&#35831;&#37325;&#35797;</p>
+    </div>
+</div>
+<div id="page-content">
+<div class="fable-page">
+    <nav class="fable-nav">
+        <a href="javascript:history.back()">← 上一篇</a>
+        <a href="../index.html">📖 返回目录</a>
+    </nav>
+
+    <header class="fable-header fade-in-up">
+        <span class="story-number">第 035 篇</span>
+        <h1>再生医学</h1>
+        <div class="meta">
+            <span class="field-tag">医学</span>
+            <time datetime="2026-05-23">2026-05-23</time>
+        </div>
+    </header>
+
+    <section class="fable-body fade-in-up">
+<h2>寓言</h2>
+<p>很久以前，在一片被风暴摧残的森林里，住着一位老橡树，他曾经是这片土地的王者，但一场雷火烧毁了他大半的树干，树皮焦黑，枝桠断裂，连树根都露出了大半。周围的树木都叹息着说：“他活不久了，树心已经空了。”</p>
+<p>一位年轻的樵夫路过，看见老橡树的惨状，心生怜悯，便想为他做点什么。他取来一把利斧，小心翼翼地削去焦枯的树皮，又用溪水和泥土调成泥浆，涂抹在裸露的树根上。他还在断裂的枝干旁插了几根柳条，用藤蔓固定，仿佛为老橡树接上了新的骨骼。</p>
+<p>“你这是白费力气，”另一棵苍老的杉树摇着枝叶说，“树木的伤口只能自己愈合，你碰了它，只会让它死得更快。”但樵夫没有放弃。他每天清晨来浇水，傍晚来修剪枯枝，还在树根周围撒下一些苔藓的孢子，让它们像<strong>活细胞</strong>一样覆盖裸露的树皮。</p>
+<p>几个月过去了，老橡树并未好转，反而开始从切口处流出暗褐色的汁液。樵夫心中焦急，却忽然想起祖父曾说过：“树木的伤疤里藏着<strong>再生</strong>的秘密，它们不是靠外力修补，而是靠唤醒自己沉睡的力量。”于是，樵夫不再强行干预，而是挖开树根旁的土壤，让阳光和雨水自然渗透，又把一些<mark>年轻的嫩芽</mark>——从森林各处采集的榉树、枫树的幼苗——种在周围，让它们像支架一样围绕老橡树生长，为他<strong>提供新的养分和支撑</strong>。</p>
+<p>一年后的春天，奇迹发生了。老橡树焦枯的树皮上冒出了嫩绿的新芽，那些断裂的枝干旁，柳条竟然生根发芽，与老橡树的木质部<strong>融为了一体</strong>。裸露的树根上，苔藓长成了厚厚的地毯，牢牢固定住泥土，而周围那些年轻的树苗，则用它们的根系与老橡树的残根<strong>交织成网</strong>，共同吸收水分和养分。老橡树不仅活了下来，还比以前更加茂盛——他的树冠里，小鸟筑了新巢，树洞里住进了松鼠，而在他脚下，曾经焦黑的土壤上开满了野花。</p>
+<p class="moral">寓意：真正的再生，不是用外力粗暴地替换破损的部件，而是<strong>唤醒生命自身修复的潜能</strong>，并用<mark>适宜的环境、支撑的基质和引导的线索</mark>来帮助它重建结构和功能。正如森林中的老橡树，通过幼苗的共生、苔藓的覆盖和根系的联网，实现了<strong>自我更新</strong>——这便是再生医学的核心：为人体提供<strong>生物支架、种子细胞和生长信号</strong>，让衰竭的器官和组织，像树木发芽一样，重新长出自己的春天。</p>
+
+<div class="concept-explanation">
+<h2>概念解析</h2>
+<p><strong>再生医学</strong>是医学领域的前沿方向，旨在通过<mark>细胞疗法、组织工程和生物材料</mark>，<strong>修复、替换或再生</strong>受损的人体组织与器官。它的核心策略包括：<strong>1) 种子细胞</strong>（如干细胞、诱导多能干细胞），能分化为特定细胞类型；<strong>2) 生物支架</strong>（如胶原蛋白、合成聚合物），为细胞提供三维生长框架；<strong>3) 生长因子/信号分子</strong>，调控细胞的增殖、分化和血管形成。三者结合，就像寓言中的“嫩芽、苔藓和根网”协同作用——不依靠外来替代物，而是<mark>激活人体自身的修复机制</mark>，让受损的心脏、肝脏、神经或骨骼<strong>自我重建</strong>。再生医学已在皮肤移植、软骨修复和角膜再生等领域取得临床突破，未来甚至有潜力让衰竭的器官在实验室中“生长”出来，<strong>终结器官移植的等待名单</strong>。</p>
+</div>
+    </section>
+
+
+    <section class="discussion fade-in-up">
+        <h3>💬 讨论区</h3>
+        <script src="https://giscus.app/client.js"
+            data-repo="airealimboften/knowledgebuilding"
+            data-repo-id="R_kgDOSe7aUA"
+            data-category="General"
+            data-category-id="DIC_kwDOSe7aUM4C9KUw"
+            data-mapping="specific"
+            data-term="035 再生医学"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="noborder_dark"
+            data-lang="zh-CN"
+            crossorigin="anonymous"
+            async>
+        </script>
+    </section>
+
+    <footer class="page-footer">
+        <p>每日寓言 · 概念之旅 | 以寓言之光，照亮知识的幽径</p>
+    </footer>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const H = '1839925186';
+    const K = 'fable_auth';
+    const overlay = document.getElementById('auth-overlay');
+    const content = document.getElementById('page-content');
+
+    function simpleHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0;
+        }
+        return hash.toString();
+    }
+
+    function unlock() {
+        overlay.style.display = 'none';
+        content.style.display = '';
+    }
+
+    function reject() {
+        document.getElementById('auth-error').style.display = 'block';
+        document.getElementById('auth-input').value = '';
+        document.getElementById('auth-input').focus();
+    }
+
+    // Already authenticated?
+    if (localStorage.getItem(K) === H) {
+        unlock();
+        return;
+    }
+
+    // Hide content until password is entered
+    content.style.display = 'none';
+
+    function check() {
+        const v = document.getElementById('auth-input').value.trim();
+        if (simpleHash(v) === H) {
+            localStorage.setItem(K, H);
+            unlock();
+        } else {
+            reject();
+        }
+    }
+
+    document.getElementById('auth-btn').addEventListener('click', check);
+    document.getElementById('auth-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') check();
+    });
+});
+</script>
+</body>
+</html>
