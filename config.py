@@ -14,7 +14,7 @@ ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 # API 配置
 # ============================================================
 # 主选：DeepSeek API
-DEEPSEEK_API_KEY = "sk-00bbdababe7340a2b86dfa954335294b"
+DEEPSEEK_API_KEY = ""
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 DEEPSEEK_MODEL = "deepseek-chat"
 
