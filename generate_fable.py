@@ -44,37 +44,45 @@ logger = logging.getLogger(__name__)
 # ============================================================
 # DeepSeek API
 # ============================================================
-def call_deepseek(prompt):
+def call_deepseek(prompt, max_tokens=1024):
     """调用 DeepSeek API（OpenAI 兼容接口）"""
     from openai import OpenAI
     client = OpenAI(
         api_key=config.DEEPSEEK_API_KEY,
         base_url=config.DEEPSEEK_BASE_URL,
+        timeout=config.REQUEST_TIMEOUT,
     )
     response = client.chat.completions.create(
         model=config.DEEPSEEK_MODEL,
         messages=[
             {
                 "role": "system",
-                "content": "你是一位博学的寓言大师，擅长用精炼的寓言故事解说复杂的专业概念。你的输出是 HTML 片段。",
+                "content": "你是一位博学的寓言大师，擅长用精炼的寓言故事解说复杂的专业概念。",
             },
             {"role": "user", "content": prompt},
         ],
         temperature=0.85,
-        max_tokens=2048,
+        max_tokens=max_tokens,
     )
     return response.choices[0].message.content
 
 
-def call_llm(prompt):
-    try:
-        logger.info("尝试调用 DeepSeek API...")
-        result = call_deepseek(prompt)
-        logger.info("DeepSeek 调用成功")
-        return result
-    except Exception as e:
-        logger.error(f"DeepSeek 调用失败: {e}")
-        raise RuntimeError("API 调用失败")
+def call_llm(prompt, max_tokens=1024):
+    last_error = None
+    for attempt in range(config.MAX_RETRIES):
+        try:
+            logger.info(f"调用 DeepSeek API (第 {attempt+1}/{config.MAX_RETRIES} 次)...")
+            result = call_deepseek(prompt, max_tokens=max_tokens)
+            logger.info("DeepSeek 调用成功")
+            return result
+        except Exception as e:
+            last_error = e
+            if attempt < config.MAX_RETRIES - 1:
+                wait = 2 ** attempt  # 1s, 2s, 4s...
+                logger.warning(f"重试 {attempt+1}/{config.MAX_RETRIES}: {e}，等待 {wait}s")
+                time.sleep(wait)
+    logger.error(f"DeepSeek 调用失败（已重试 {config.MAX_RETRIES} 次）: {last_error}")
+    raise RuntimeError("API 调用失败")
 
 
 # ============================================================
@@ -106,38 +114,20 @@ def build_fable_prompt(concept_name, field, reply_context=None):
     reply_part = ""
     if reply_context:
         title, comment = reply_context
-        reply_part = f"""
----
-在你开始写寓言之前，请先回复上一篇的读者讨论：
-上一篇标题：《{title}》
-读者留言：{comment}
+        reply_part = (
+            f"先回复上一篇《{title}》的读者留言：「{comment}」"
+            f"用 <div class=\"ai-reply\"><h4>回复</h4><p>你的回复</p></div> 包裹（3-5句话）。\n\n"
+        )
 
-请生成一段简洁、有深度的回复（3-5句话），用 <div class="ai-reply"><h4>回复</h4><p>你的回复</p></div> 包裹。
----
-"""
-
-    return f"""{reply_part}
-请为以下概念创作一篇中文寓言故事。输出纯 HTML 片段（不需要 DOCTYPE、head、body 等外层标签）。
-
-概念：{concept_name}
-领域：{field}
-
-创作要求：
-1. 寓言只保留核心部分，用最精炼的叙事说明概念本质
-2. 角色和场景要生动形象，但不冗余
-3. 寓言正文用 <h2>寓言</h2> 开头，包裹在若干 <p> 标签中
-4. 寓言结尾用 <p class="moral">寓意点睛</p> 点明概念要义（1-2句话）
-5. 在寓言之后，用 <div class="concept-explanation"><h2>概念解析</h2><p>...</p></div> 提供简明的正式解释（2-3句）
-6. 如果有助于理解，可以在正文中嵌入：
-   - 表格：用标准 <table> 标签（用于对比、分类）
-   - SVG 图解：用内联 <svg> 标签（用于流程、关系图，注意配色用浅色线条和文字，背景透明）
-   - 重点标注：<mark> 和 <strong>
-7. 总字数控制在 500-800 字
-8. 不要使用 markdown 格式，直接输出 HTML
-9. 不要包含 ```html 代码块标记
-
-直接输出 HTML 片段，不要有任何其他前缀或后缀说明。
-"""
+    return (
+        f"{reply_part}"
+        f"为概念「{concept_name}」（{field}）创作中文寓言。输出纯 HTML：\n"
+        f"1. <h2>寓言</h2> 开头，<p>叙事</p>，<p class=\"moral\">寓意</p> 收尾\n"
+        f"2. <div class=\"concept-explanation\"><h2>概念解析</h2><p>解释</p></div>\n"
+        f"3. 可用 <mark> <strong> 强调，禁止表格和 SVG\n"
+        f"4. 正文 500-800 字，精炼叙事不冗余\n"
+        f"只输出 HTML，不要 markdown 标记。"
+    )
 
 
 def build_reply_prompt(title, comment):
@@ -178,13 +168,13 @@ def generate_one_fable(state, concepts_data, today, check_discussion=False):
             logger.info(f"发现上篇讨论: {prev_comment[:50]}...")
             reply_context = (prev_title, prev_comment)
             try:
-                reply_text = call_llm(build_reply_prompt(prev_title, prev_comment))
+                reply_text = call_llm(build_reply_prompt(prev_title, prev_comment), max_tokens=400)
             except Exception:
                 reply_text = None
 
     # 生成寓言
     try:
-        fable_content = call_llm(build_fable_prompt(concept_name, field, reply_context))
+        fable_content = call_llm(build_fable_prompt(concept_name, field, reply_context), max_tokens=1500)
         fable_content = fable_content.strip()
         for prefix in ["```html", "```"]:
             if fable_content.startswith(prefix):
@@ -272,23 +262,26 @@ def main():
     concepts_data = concept_manager.load_concepts()
     generated = 0
 
-    for i in range(remaining):
-        if state["is_paused"]:
-            logger.info("检查点暂停，停止后续生成。")
-            break
-        check_disc = (i == 0 and already == 0)  # 仅今日第一篇检查讨论
-        ok = generate_one_fable(state, concepts_data, today, check_discussion=check_disc)
-        if ok:
-            generated += 1
-            time.sleep(2)  # API 间隔，避免限流
-        else:
-            logger.warning(f"第 {i+1} 篇生成失败，跳过。")
-            time.sleep(5)
+    try:
+        for i in range(remaining):
+            if state["is_paused"]:
+                logger.info("检查点暂停，停止后续生成。")
+                break
+            check_disc = (i == 0 and already == 0)  # 仅今日第一篇检查讨论
+            ok = generate_one_fable(state, concepts_data, today, check_discussion=check_disc)
+            if ok:
+                generated += 1
+                time.sleep(2)  # API 间隔，避免限流
+            else:
+                logger.warning(f"第 {i+1} 篇生成失败，跳过。")
+                time.sleep(5)
+    finally:
+        # 无论成功与否，都更新目录首页
+        html_builder.update_index_html(state, concepts_data)
+        logger.info("目录首页已更新")
+        if generated > 0:
+            git_push(state["total_generated"], f"batch_{generated}_fables")
 
-    # 更新目录 & 推送
-    html_builder.update_index_html(state, concepts_data)
-    logger.info("目录首页已更新")
-    git_push(state["total_generated"], f"batch_{generated}_fables")
     logger.info(f"[OK] 今日共生成 {generated} 篇寓言")
     logger.info("=" * 60)
 
@@ -328,19 +321,22 @@ def extra_main():
     concepts_data = concept_manager.load_concepts()
     generated = 0
 
-    for i in range(to_generate):
-        if state["is_paused"]:
-            break
-        ok = generate_one_fable(state, concepts_data, today)
-        if ok:
-            state["today_extra_count"] = state.get("today_extra_count", 0) + 1
-            save_state(state)
-            generated += 1
-            time.sleep(2)
+    try:
+        for i in range(to_generate):
+            if state["is_paused"]:
+                break
+            ok = generate_one_fable(state, concepts_data, today)
+            if ok:
+                state["today_extra_count"] = state.get("today_extra_count", 0) + 1
+                save_state(state)
+                generated += 1
+                time.sleep(2)
+    finally:
+        if generated > 0:
+            html_builder.update_index_html(state, concepts_data)
+            git_push(state["total_generated"], f"extra_{generated}_fables")
 
     if generated > 0:
-        html_builder.update_index_html(state, concepts_data)
-        git_push(state["total_generated"], f"extra_{generated}_fables")
         logger.info(f"[OK] 额外生成 {generated} 篇")
 
 
@@ -415,11 +411,20 @@ def git_push(story_number, label):
     if not os.path.exists(GIT_EXE):
         return
     try:
-        _run_git("add", "-A")
-        _run_git("commit", "-m", f"auto: {label} (up to #{story_number:03d})")
-        result = _run_git("push", "origin", "main")
-        if result and result.returncode == 0:
-            logger.info("GitHub Pages 推送成功")
+        _run_git("add", "stories/", "index.html", "state.json", "concepts.json")
+        result = _run_git("commit", "-m", f"auto: {label} (up to #{story_number:03d})")
+        if result and result.returncode != 0:
+            # 可能是 "nothing to commit" — 这不算错误
+            pass
+        for attempt in range(3):
+            result = _run_git("push", "origin", "main")
+            if result and result.returncode == 0:
+                logger.info("GitHub Pages 推送成功")
+                return
+            if attempt < 2:
+                logger.warning(f"Git push 失败，{3-attempt-1}秒后重试...")
+                time.sleep(3)
+        logger.error("Git push 最终失败，请手动推送")
     except Exception as e:
         logger.error(f"Git 推送异常: {e}")
 

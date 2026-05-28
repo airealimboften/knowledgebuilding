@@ -2,6 +2,7 @@
 """每日寓言生成系统 - 配置文件"""
 
 import os
+import json
 
 # ============================================================
 # 路径配置
@@ -11,18 +12,26 @@ STORIES_DIR = os.path.join(BASE_DIR, "stories")
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 
 # ============================================================
+# 本地密钥（从 secrets.local.json 加载，该文件不会提交到 Git）
+# ============================================================
+_secrets_path = os.path.join(BASE_DIR, "secrets.local.json")
+_secrets = {}
+if os.path.exists(_secrets_path):
+    with open(_secrets_path, "r", encoding="utf-8") as _f:
+        _secrets = json.load(_f)
+
+# ============================================================
 # API 配置
 # ============================================================
-# 主选：DeepSeek API
-DEEPSEEK_API_KEY = ""
+DEEPSEEK_API_KEY = _secrets.get("DEEPSEEK_API_KEY", "")
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
 DEEPSEEK_MODEL = "deepseek-chat"
 
 # ============================================================
 # 访问控制
 # ============================================================
-# 页面访问密码（默认 "fable2026"，修改后需重新生成页面）
-ACCESS_PASSWORD_HASH = "1839925186"
+# 密码哈希也存在 secrets.local.json 中（默认密码 "fable2026"）
+ACCESS_PASSWORD_HASH = _secrets.get("ACCESS_PASSWORD_HASH", "")
 
 # 授权的 GitHub 用户名（只有这些账号的留言会被读取和回复）
 AUTHORIZED_USERS = ["airealimboften"]

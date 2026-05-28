@@ -1,6 +1,11 @@
 __pycache__/
 *.pyc
 git/
+PortableGit/
 PortableGit.exe
 generate.log
 task_scheduler.xml
+secrets.local.json
+_debug_hash.py
+test_hash.html
+regenerate_pages.py

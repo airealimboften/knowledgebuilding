@@ -413,7 +413,7 @@ def _extract_meta_from_story(filepath):
     date = ""
     try:
         with open(filepath, "r", encoding="utf-8") as f:
-            content = f.read(2000)
+            content = f.read()
 
         field_match = re.search(r'class="field-tag[^"]*">([^<]+)</span>', content)
         if field_match:
