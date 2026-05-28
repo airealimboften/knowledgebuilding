@@ -12,8 +12,6 @@ STORIES_DIR = os.path.join(BASE_DIR, "stories")
 ASSETS_DIR = os.path.join(BASE_DIR, "assets")
 
 # ============================================================
-# 本地密钥（从 secrets.local.json 加载，该文件不会提交到 Git）
-# ============================================================
 _secrets_path = os.path.join(BASE_DIR, "secrets.local.json")
 _secrets = {}
 if os.path.exists(_secrets_path):
