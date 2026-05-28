@@ -30,7 +30,6 @@ DEEPSEEK_MODEL = "deepseek-chat"
 # ============================================================
 # 访问控制
 # ============================================================
-# 密码哈希也存在 secrets.local.json 中（默认密码 "fable2026"）
 ACCESS_PASSWORD_HASH = _secrets.get("ACCESS_PASSWORD_HASH", "")
 
 # 授权的 GitHub 用户名（只有这些账号的留言会被读取和回复）
